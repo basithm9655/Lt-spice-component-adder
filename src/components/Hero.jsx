@@ -159,10 +159,10 @@ export default function Hero() {
           border: '1px solid rgba(123,57,252,0.2)', width: '100%', maxWidth: 700
         }}>
           {[
-            { value: '10+', label: 'Built-in Components' },
-            { value: '1-Click', label: 'Installation' },
-            { value: 'Paste', label: 'Custom Parts' },
-            { value: 'Free', label: 'Open Source' },
+            { value: '59', label: 'Verified Models' },
+            { value: '100%', label: 'Physical Accuracy' },
+            { value: '1-Click', label: 'Instant Add' },
+            { value: 'Free', label: 'Portable App' },
           ].map(stat => (
             <div key={stat.label} style={{ textAlign: 'center', flex: '1 1 120px' }}>
               <div className="stat-value" style={{ fontFamily: 'Manrope', fontWeight: 800, fontSize: 28, color: 'white', marginBottom: 4 }}>

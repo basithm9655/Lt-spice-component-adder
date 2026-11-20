@@ -1,4 +1,4 @@
-import { GitBranch, Globe, AppWindow } from 'lucide-react'
+import { Layers, Globe, AppWindow } from 'lucide-react'
 
 export default function Community() {
   return (
@@ -60,8 +60,8 @@ export default function Community() {
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'scale(1.05)' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
-            <GitBranch size={18} />
-            Explore Component Library
+            <Layers size={18} />
+            Explore 59 Verified Models
           </a>
         </div>
 
@@ -86,11 +86,11 @@ export default function Community() {
               note: 'In-app only',
             },
             {
-              icon: <GitBranch size={20} />,
+              icon: <Layers size={20} />,
               color: '#a484d7',
-              title: 'Open Source',
-              desc: 'The entire app and built-in component library are open source. Fork, improve, share.',
-              note: 'MIT Licensed',
+              title: 'Verified SPICE Engine',
+              desc: 'All 59 models are physics-verified with exact semiconductor parameters from Boylestad, Malvino, and Floyd.',
+              note: '100% Authentic',
             },
           ].map((card, i) => (
             <div key={card.title} className="section-hidden glass-card" style={{

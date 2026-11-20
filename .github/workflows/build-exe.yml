@@ -44,14 +44,15 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main'
         with:
-          tag_name: v2.1.0
-          name: "LTspice Component Adder Pro v2.1.0 (100% Verified SPICE Models)"
+          tag_name: v2.2.0
+          name: "LTspice Component Adder Pro v2.2.0 (1-Click Instant Add & Minimalist Theme)"
           body: |
-            # ⚡ LTspice Component Adder Pro — Windows Standalone Release (v2.1.0 - 100% Physics Verified)
+            # ⚡ LTspice Component Adder Pro — Windows Standalone Release (v2.2.0)
 
             Built automatically via GitHub Actions for Windows 10 & Windows 11.
 
             ### 🚀 What's Included:
+            - **1-Click Instant Install**: Open the app and click **⚡ Add All (59)** to install and verify all 59 components into LTspice in seconds.
             - **59 Genuine SPICE Semiconductor Models** covering standard EDC, LIC, and Analog/Digital laboratory syllabus (Boylestad, Malvino, Floyd, Millman-Halkias, Neamen).
             - **Germanium Diodes**: 1N34A, OA79, OA91, 1N270, 1N60 with authentic knee ($V_f \approx 0.25\text{V}$, $E_g = 0.67\text{eV}$).
             - **Laboratory BJTs**: SL100, SK100, BC547/548, BC557/558, BD139/140 Push-Pull pairs, TIP31C/32C, and 2N3055/MJ2955.
@@ -63,14 +64,13 @@ jobs:
 
             ### 💻 Performance Enhancements for Low-End Laptops:
             - **Windows 10/11 Process DPI Awareness V2**: Crisp rendering without GPU DWM stretching.
+            - **Minimalist Squircle Vector Icon**: Embedded high-resolution multi-size icon.
+            - **Automatic LTspice Detection**: Seamlessly locates LTspice across standard Windows 10/11 install paths.
             - **Debounced Instant Search**: Zero typing lag or stutter.
-            - **Global Cross-Category Search**: Instantly find models across all 9 categories.
-            - **Flattened Widget Architecture**: 40% lower memory and Canvas widget overhead.
-            - **Progressive Streaming Rendering**: Instant 60 FPS loading.
             - **Native LTspice Database Sync**: Updates `standard.dio`, `standard.bjt`, `standard.jft`, `standard.mos`.
 
             ### 📥 Download
-            Download **`ltspice-component-adder-by-Basi.exe`** below, run it on Windows, click **⚡ Auto Detect** and install all components in one click!
+            Download **`ltspice-component-adder-by-Basi.exe`** below, run it on Windows, and click **⚡ Add All (59)** to install everything with zero friction!
           files: |
             desktop-app/dist/ltspice-component-adder-by-Basi.exe
           draft: false

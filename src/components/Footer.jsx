@@ -1,4 +1,4 @@
-import { GitBranch, Heart, ExternalLink } from 'lucide-react'
+import { Heart, ExternalLink } from 'lucide-react'
 
 const links = {
   Product: [
@@ -9,7 +9,7 @@ const links = {
   ],
   Community: [
     { label: 'Models Library', href: '#components' },
-    { label: 'Open Source', href: '#community' },
+    { label: 'Verified Library', href: '#community' },
   ],
   Resources: [
     { label: 'Custom Component Guide', href: '#how-it-works' },

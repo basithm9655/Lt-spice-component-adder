@@ -84,8 +84,16 @@ ICON_PATH    = os.path.join(BUNDLE_DIR, "icon.ico")
 
 LTSPICE_CANDIDATES = [
     os.path.expandvars(r"%LOCALAPPDATA%\LTspice"),
+    os.path.expandvars(r"%LOCALAPPDATA%\Programs\ADI\LTspice"),
+    os.path.expandvars(r"%USERPROFILE%\AppData\Local\LTspice"),
     os.path.expandvars(r"%USERPROFILE%\Documents\LTspiceXVII"),
     os.path.expandvars(r"%USERPROFILE%\Documents\LTspice"),
+    os.path.expandvars(r"%ProgramFiles%\ADI\LTspice"),
+    os.path.expandvars(r"%ProgramFiles(x86)%\ADI\LTspice"),
+    os.path.expandvars(r"%ProgramFiles%\LTC\LTspiceXVII"),
+    os.path.expandvars(r"%ProgramFiles(x86)%\LTC\LTspiceXVII"),
+    os.path.expandvars(r"%ProgramFiles%\LTC\LTspice"),
+    os.path.expandvars(r"%ProgramFiles(x86)%\LTC\LTspice"),
     r"C:\Program Files\ADI\LTspice",
     r"C:\Program Files\LTC\LTspiceXVII",
     r"C:\Program Files\LTC\LTspice",
@@ -424,15 +432,19 @@ class PremiumLogo(ctk.CTkCanvas):
 
     def draw_logo(self):
         self.delete("all")
-        # Glow circles
-        self.create_oval(8, 8, 46, 46, fill="#131335", outline="#1d4ed8", width=1.5)
-        self.create_oval(16, 16, 38, 38, fill="#1e3a8a", outline="", width=0)
-        # Lightning bolt points
-        pts = [27, 8, 36, 24, 28, 24, 31, 46, 18, 28, 26, 28]
-        self.create_polygon(pts, fill="#5b9bf5", outline="#93c5fd", width=1)
-        # Accent circuit node
-        self.create_line(36, 24, 46, 24, fill="#93c5fd", width=2)
-        self.create_oval(44, 21, 50, 27, fill="#60a5fa", outline="")
+        # Modern minimalist squircle tile matching web design
+        self.create_rectangle(4, 4, 50, 50, fill="#120c24", outline="#7b39fc", width=2)
+        # Circuit ingress and egress traces
+        self.create_line(8, 27, 18, 27, fill="#a855f7", width=2)
+        self.create_line(36, 27, 46, 27, fill="#06b6d4", width=2)
+        # Semiconductor diode triangle
+        self.create_polygon(18, 16, 34, 27, 18, 38, fill="#8b5cf6", outline="#c084fc", width=1.5)
+        # Cathode vertical bar
+        self.create_line(35, 15, 35, 39, fill="#22d3ee", width=2.5)
+        # Glowing "+" adder node badge in top right
+        self.create_oval(36, 5, 49, 18, fill="#1a103c", outline="#22d3ee", width=1)
+        self.create_line(39, 11.5, 46, 11.5, fill="#22d3ee", width=1.5)
+        self.create_line(42.5, 8, 42.5, 15, fill="#22d3ee", width=1.5)
 
 
 # ── Main Application Class ─────────────────────────────────────────────────────
@@ -456,7 +468,12 @@ class App(ctk.CTk):
 
         # Load Path Configurations
         self.cfg = load_cfg()
-        self.ltspice_path = self.cfg.get("ltspice_path", detect_ltspice())
+        detected = detect_ltspice()
+        self.ltspice_path = self.cfg.get("ltspice_path") or detected
+        if detected and not self.cfg.get("ltspice_path"):
+            self.cfg["ltspice_path"] = detected
+            save_cfg(self.cfg)
+
         self.categories = scan_categories()
         self.active_cat = tk.StringVar()
         self.check_vars: dict[str, tk.BooleanVar] = {}
@@ -467,6 +484,18 @@ class App(ctk.CTk):
 
         self._build_ui()
         self._populate_categories()
+
+        # Auto-select the first category so components are visible immediately on startup
+        if self.categories:
+            first_cat = list(self.categories.keys())[0]
+            self._select_cat(first_cat)
+
+        if self.ltspice_path:
+            total_comps = sum(len(c) for c in self.categories.values())
+            self.status.set(f"LTspice ready ({os.path.basename(self.ltspice_path)}). Click '⚡ Add All' to install all {total_comps} components.")
+        else:
+            self.status.set("LTspice not detected automatically. Please click '⚡ Auto Detect' or 'Browse'.")
+
         self._check_announcement()
         self._load_sheet_components()
 
@@ -676,19 +705,27 @@ class App(ctk.CTk):
         bf = ctk.CTkFrame(ft, fg_color="transparent")
         bf.grid(row=0, column=3, padx=20, pady=12, sticky="e")
 
-        ctk.CTkButton(bf, text="＋ Add Custom Component",
-                      width=190, height=40,
-                      font=ctk.CTkFont(size=13, weight="bold"),
+        ctk.CTkButton(bf, text="＋ Custom Part",
+                      width=140, height=40,
+                      font=ctk.CTkFont(size=12, weight="bold"),
                       fg_color="#1e1e35", hover_color="#2d2d44",
                       border_width=1, border_color="#3b3b55",
-                      command=self._add_dialog).pack(side="left", padx=(0, 12))
+                      command=self._add_dialog).pack(side="left", padx=(0, 10))
 
-        self.inst_btn = ctk.CTkButton(bf, text="Install Selected  →",
-                                      width=180, height=40,
-                                      font=ctk.CTkFont(size=13, weight="bold"),
+        self.inst_btn = ctk.CTkButton(bf, text="Install Selected →",
+                                      width=160, height=40,
+                                      font=ctk.CTkFont(size=12, weight="bold"),
                                       fg_color="#2563eb", hover_color="#3b82f6",
                                       command=self._install)
-        self.inst_btn.pack(side="left")
+        self.inst_btn.pack(side="left", padx=(0, 10))
+
+        total_comps = sum(len(c) for c in self.categories.values())
+        self.add_all_btn = ctk.CTkButton(bf, text=f"⚡ Add All ({total_comps})",
+                                         width=165, height=40,
+                                         font=ctk.CTkFont(size=13, weight="bold"),
+                                         fg_color="#10b981", hover_color="#059669",
+                                         command=self._install_all_components)
+        self.add_all_btn.pack(side="left")
 
     # ── Category Browser Setup ─────────────────────────────────────────────────
 
@@ -1029,8 +1066,15 @@ class App(ctk.CTk):
     def _install_all_components(self):
         """Install all components across all categories in one click."""
         if not self.ltspice_path:
-            messagebox.showerror("Setup Folder Path", "Please select or auto-detect your LTspice install folder first.")
-            return
+            detected = detect_ltspice()
+            if detected:
+                self.ltspice_path = detected
+                self.cfg["ltspice_path"] = detected
+                save_cfg(self.cfg)
+                self.path_lbl.configure(text=self._short(detected), text_color="#38bdf8")
+            else:
+                messagebox.showerror("Setup Folder Path", "Please select or auto-detect your LTspice install folder first.")
+                return
 
         all_comps = []
         for cat_list in self.categories.values():
@@ -1040,9 +1084,16 @@ class App(ctk.CTk):
 
     def _install(self):
         if not self.ltspice_path:
-            messagebox.showerror("Setup Folder Path",
-                                 "LTspice install folder is not configured. Please browse and select it first.")
-            return
+            detected = detect_ltspice()
+            if detected:
+                self.ltspice_path = detected
+                self.cfg["ltspice_path"] = detected
+                save_cfg(self.cfg)
+                self.path_lbl.configure(text=self._short(detected), text_color="#38bdf8")
+            else:
+                messagebox.showerror("Setup Folder Path",
+                                     "LTspice install folder is not configured. Please browse and select it first.")
+                return
 
         cat = self.active_cat.get()
         all_c = self.categories.get(cat, [])
@@ -1056,6 +1107,8 @@ class App(ctk.CTk):
 
     def _execute_install(self, comp_list):
         self.inst_btn.configure(state="disabled", text="Installing...")
+        if hasattr(self, "add_all_btn"):
+            self.add_all_btn.configure(state="disabled", text="Installing...")
         self.status.set("Copying and verifying components into LTspice...")
         self.pbar.set(0)
 
@@ -1092,7 +1145,10 @@ class App(ctk.CTk):
         threading.Thread(target=run, daemon=True).start()
 
     def _install_done(self, ok, errs, log):
-        self.inst_btn.configure(state="normal", text="Install Selected  →")
+        self.inst_btn.configure(state="normal", text="Install Selected →")
+        if hasattr(self, "add_all_btn"):
+            total_comps = sum(len(c) for c in self.categories.values())
+            self.add_all_btn.configure(state="normal", text=f"⚡ Add All ({total_comps})")
         self.pbar.set(1.0)
 
         win = ctk.CTkToplevel(self)
