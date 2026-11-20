@@ -44,15 +44,16 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main'
         with:
-          tag_name: v2.2.0
-          name: "LTspice Component Adder Pro v2.2.0 (1-Click Instant Add & Minimalist Theme)"
+          tag_name: v2.3.0
+          name: "LTspice Component Adder Pro v2.3.0 (GitHub In-App Auto-Updater & 59 Verified Models)"
           body: |
-            # ⚡ LTspice Component Adder Pro — Windows Standalone Release (v2.2.0)
+            # ⚡ LTspice Component Adder Pro — Windows Standalone Release (v2.3.0)
 
             Built automatically via GitHub Actions for Windows 10 & Windows 11.
 
-            ### 🚀 What's Included:
-            - **1-Click Instant Install**: Open the app and click **⚡ Add All (59)** to install and verify all 59 components into LTspice in seconds.
+            ### 🚀 What's New in v2.3.0:
+            - **🔄 GitHub In-App Auto-Updater**: The Windows app automatically checks GitHub Releases for new updates on launch in the background, or on demand via the **"Check for Updates"** button. If an update is detected, an interactive dialog allows 1-click download, verified streaming progress, and seamless self-replacement restart on Windows!
+            - **⚡ 1-Click Instant Install**: Open the app and click **⚡ Add All (59)** to install and verify all 59 components into LTspice in seconds.
             - **59 Genuine SPICE Semiconductor Models** covering standard EDC, LIC, and Analog/Digital laboratory syllabus (Boylestad, Malvino, Floyd, Millman-Halkias, Neamen).
             - **Germanium Diodes**: 1N34A, OA79, OA91, 1N270, 1N60 with authentic knee ($V_f \approx 0.25\text{V}$, $E_g = 0.67\text{eV}$).
             - **Laboratory BJTs**: SL100, SK100, BC547/548, BC557/558, BD139/140 Push-Pull pairs, TIP31C/32C, and 2N3055/MJ2955.

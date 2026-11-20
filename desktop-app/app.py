@@ -9,6 +9,61 @@ import threading
 import urllib.request
 import webbrowser
 import tempfile
+import subprocess
+
+# ── Version & GitHub In-App Updater Configurations ─────────────────────────────
+APP_VERSION = "2.3.0"
+GITHUB_REPO = "basithm9655/Lt-spice-component-adder"
+GITHUB_LATEST_RELEASE_API = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
+
+def parse_version_tuple(tag_or_ver):
+    """Parse version tag (e.g. 'v2.2.0' or '2.2.0') into (2, 2, 0) integer tuple."""
+    s = str(tag_or_ver or "").strip().lstrip("vV")
+    parts = []
+    for p in s.split("."):
+        digits = "".join(c for c in p if c.isdigit())
+        parts.append(int(digits) if digits else 0)
+    while len(parts) < 3:
+        parts.append(0)
+    return tuple(parts[:3])
+
+def fetch_github_latest_release(timeout=6):
+    """Fetch latest release info from GitHub API. Returns dict or None."""
+    try:
+        req = urllib.request.Request(
+            GITHUB_LATEST_RELEASE_API,
+            headers={
+                "User-Agent": f"LTspiceComponentAdder/{APP_VERSION}",
+                "Accept": "application/vnd.github.v3+json"
+            }
+        )
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            tag = data.get("tag_name", "").strip()
+            name = data.get("name", "").strip()
+            body = data.get("body", "").strip()
+            html_url = data.get("html_url", "")
+            assets = data.get("assets", [])
+            exe_url, exe_size, exe_name = "", 0, ""
+            for a in assets:
+                aname = a.get("name", "")
+                if aname.lower().endswith(".exe"):
+                    exe_url = a.get("browser_download_url", "")
+                    exe_size = a.get("size", 0)
+                    exe_name = aname
+                    break
+            return {
+                "tag": tag,
+                "name": name,
+                "body": body,
+                "html_url": html_url,
+                "exe_url": exe_url,
+                "exe_size": exe_size,
+                "exe_name": exe_name,
+                "version_tuple": parse_version_tuple(tag)
+            }
+    except Exception:
+        return None
 
 # ── Windows 10/11 DPI & Low-End Laptop Performance Optimization ──────────────
 try:
@@ -452,7 +507,7 @@ class PremiumLogo(ctk.CTkCanvas):
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title("LTspice Component Adder Pro")
+        self.title(f"LTspice Component Adder Pro v{APP_VERSION}")
         self.geometry(f"{APP_W}x{APP_H}")
         self.minsize(920, 600)
 
@@ -498,6 +553,193 @@ class App(ctk.CTk):
 
         self._check_announcement()
         self._load_sheet_components()
+        self._latest_release_info = None
+        self._check_updates(manual=False)
+
+    # ── GitHub In-App Auto-Updater ─────────────────────────────────────────────
+
+    def _check_updates(self, manual=False):
+        """Check for updates using GitHub Releases API."""
+        if manual:
+            self.status.set("Checking GitHub for updates...")
+
+        def _worker():
+            release = fetch_github_latest_release(timeout=8)
+            if not release:
+                if manual:
+                    self.after(0, lambda: messagebox.showwarning(
+                        "Update Check",
+                        "Could not connect to GitHub to check for updates.\nPlease check your internet connection."
+                    ))
+                    self.after(0, lambda: self.status.set("Update check failed. Check internet connection."))
+                return
+
+            current_tuple = parse_version_tuple(APP_VERSION)
+            remote_tuple = release["version_tuple"]
+
+            if remote_tuple > current_tuple:
+                # Update available!
+                self.after(0, lambda: self._show_update_notification(release))
+                if manual:
+                    self.after(0, lambda: self._show_update_dialog(release))
+            else:
+                if manual:
+                    self.after(0, lambda: messagebox.showinfo(
+                        "Up to Date",
+                        f"You are running the latest version of LTspice Component Adder Pro (v{APP_VERSION})."
+                    ))
+                    self.after(0, lambda: self.status.set(f"Up to date (v{APP_VERSION})."))
+
+        threading.Thread(target=_worker, daemon=True).start()
+
+    def _open_update_dialog_from_badge(self):
+        if self._latest_release_info:
+            self._show_update_dialog(self._latest_release_info)
+
+    def _show_update_notification(self, release):
+        self._latest_release_info = release
+        tag = release.get("tag", "Update")
+        if hasattr(self, "update_badge_btn"):
+            self.update_badge_btn.configure(text=f"⚡ Update {tag} Available")
+            self.update_badge_btn.pack(side="left", padx=(8, 0))
+        self.status.set(f"⚡ Update {tag} available on GitHub! Click 'Check for Updates' or the badge above.")
+
+    def _show_update_dialog(self, release):
+        win = ctk.CTkToplevel(self)
+        win.title("Software Update Available")
+        win.geometry("540x480")
+        win.resizable(False, False)
+        win.grab_set()
+        win.focus_set()
+
+        tag = release.get("tag", "Update")
+        name = release.get("name", tag)
+        size_mb = (release.get("exe_size", 0) / (1024 * 1024))
+        size_str = f" • {size_mb:.1f} MB" if size_mb > 0 else ""
+
+        # Title & Subtitle
+        ctk.CTkLabel(win, text=f"🎉 New Update Available: {tag}",
+                     font=ctk.CTkFont("Segoe UI", 16, "bold"), text_color="#a78bfa").pack(pady=(20, 2), padx=24, anchor="w")
+        ctk.CTkLabel(win, text=f"Current: v{APP_VERSION}  ➔  Latest: {tag}{size_str}",
+                     font=ctk.CTkFont("Segoe UI", 12), text_color="#94a3b8").pack(pady=(0, 14), padx=24, anchor="w")
+
+        # Release Notes Label
+        ctk.CTkLabel(win, text="Release Notes & Changes:", font=ctk.CTkFont(size=11, weight="bold"), text_color="#cbd5e1").pack(padx=24, anchor="w")
+
+        # Textbox with release notes
+        notes_tb = ctk.CTkTextbox(win, height=180, font=ctk.CTkFont(family="Consolas", size=11),
+                                  fg_color="#090911", text_color="#e2e8f0", corner_radius=8)
+        notes_tb.pack(fill="x", padx=24, pady=(6, 14))
+        notes_text = release.get("body", "").strip() or "Performance improvements, verified SPICE models, and updates."
+        notes_tb.insert("1.0", notes_text)
+        notes_tb.configure(state="disabled")
+
+        # Progress bar and status
+        status_lbl = ctk.CTkLabel(win, text="Ready to update.", font=ctk.CTkFont(size=11), text_color="#94a3b8")
+        status_lbl.pack(padx=24, anchor="w")
+
+        pbar = ctk.CTkProgressBar(win, height=8, fg_color="#1e1e30", progress_color="#10b981")
+        pbar.pack(fill="x", padx=24, pady=(4, 16))
+        pbar.set(0)
+
+        # Buttons Container
+        btn_frame = ctk.CTkFrame(win, fg_color="transparent")
+        btn_frame.pack(fill="x", padx=24, pady=(0, 20))
+
+        dl_btn = ctk.CTkButton(btn_frame, text="⚡ Download & Install Update", height=38,
+                               font=ctk.CTkFont(size=12, weight="bold"),
+                               fg_color="#10b981", hover_color="#059669")
+        dl_btn.pack(side="left", fill="x", expand=True, padx=(0, 8))
+
+        browser_btn = ctk.CTkButton(btn_frame, text="🌐 GitHub Release", width=120, height=38,
+                                    font=ctk.CTkFont(size=11, weight="bold"),
+                                    fg_color="#1e1e35", hover_color="#2d2d44",
+                                    command=lambda: webbrowser.open(release.get("html_url") or "https://github.com/basithm9655/Lt-spice-component-adder/releases/latest"))
+        browser_btn.pack(side="left", padx=(0, 8))
+
+        close_btn = ctk.CTkButton(btn_frame, text="Later", width=70, height=38,
+                                  font=ctk.CTkFont(size=11),
+                                  fg_color="#334155", hover_color="#475569",
+                                  command=win.destroy)
+        close_btn.pack(side="left")
+
+        def start_download():
+            dl_btn.configure(state="disabled", text="⏳ Downloading...")
+            close_btn.configure(state="disabled")
+
+            def _dl_worker():
+                try:
+                    exe_url = release.get("exe_url")
+                    if not exe_url:
+                        self.after(0, lambda: webbrowser.open(release.get("html_url")))
+                        self.after(0, win.destroy)
+                        return
+
+                    if getattr(sys, "frozen", False):
+                        exe_dir = os.path.dirname(sys.executable)
+                        target_path = os.path.join(exe_dir, f"update_{release['tag']}.exe")
+                    else:
+                        target_path = os.path.join(tempfile.gettempdir(), f"ltspice-component-adder_{release['tag']}.exe")
+
+                    req = urllib.request.Request(exe_url, headers={"User-Agent": f"LTspiceComponentAdder/{APP_VERSION}"})
+                    with urllib.request.urlopen(req, timeout=30) as resp, open(target_path, "wb") as out_f:
+                        total_bytes = int(resp.headers.get("Content-Length", 0))
+                        downloaded = 0
+                        chunk_size = 65536
+                        while True:
+                            chunk = resp.read(chunk_size)
+                            if not chunk:
+                                break
+                            out_f.write(chunk)
+                            downloaded += len(chunk)
+                            if total_bytes > 0:
+                                pct = downloaded / total_bytes
+                                mb_done = downloaded / (1024 * 1024)
+                                mb_total = total_bytes / (1024 * 1024)
+                                self.after(0, lambda p=pct, d=mb_done, t=mb_total: (
+                                    pbar.set(p),
+                                    status_lbl.configure(text=f"Downloading: {d:.1f} MB / {t:.1f} MB ({int(p*100)}%)")
+                                ))
+
+                    self.after(0, lambda: pbar.set(1.0))
+                    self.after(0, lambda: status_lbl.configure(text="✔ Download Complete! Ready to apply.", text_color="#10b981"))
+
+                    if getattr(sys, "frozen", False) and os.name == "nt":
+                        current_exe = sys.executable
+                        bat_script = f"""@echo off
+timeout /t 2 /nobreak > nul
+copy /y "{target_path}" "{current_exe}" > nul
+del "{target_path}" > nul
+start "" "{current_exe}"
+del "%~f0" > nul
+"""
+                        bat_path = os.path.join(tempfile.gettempdir(), "update_ltspice_adder.bat")
+                        with open(bat_path, "w") as f:
+                            f.write(bat_script)
+                        self.after(0, lambda: messagebox.showinfo(
+                            "Update Complete",
+                            "Update downloaded successfully! Click OK to restart and apply update."
+                        ))
+                        subprocess.Popen(["cmd.exe", "/c", bat_path], creationflags=subprocess.CREATE_NO_WINDOW)
+                        sys.exit(0)
+                    else:
+                        self.after(0, lambda: messagebox.showinfo(
+                            "Update Downloaded",
+                            f"Update downloaded to:\n{target_path}\n\nYou can launch the updated version directly."
+                        ))
+                        self.after(0, lambda: dl_btn.configure(text="✅ Downloaded", state="disabled"))
+                        self.after(0, lambda: close_btn.configure(state="normal", text="Close"))
+
+                except Exception as e:
+                    self.after(0, lambda err=str(e): (
+                        status_lbl.configure(text=f"✘ Download failed: {err}", text_color="#ef4444"),
+                        dl_btn.configure(state="normal", text="Retry Download"),
+                        close_btn.configure(state="normal")
+                    ))
+
+            threading.Thread(target=_dl_worker, daemon=True).start()
+
+        dl_btn.configure(command=start_download)
 
     def _check_announcement(self):
         def fetch():
@@ -583,10 +825,20 @@ class App(ctk.CTk):
                      font=ctk.CTkFont("Segoe UI", 18, "bold"),
                      text_color="#5b9bf5").pack(anchor="w")
 
-        credits_lbl = ctk.CTkLabel(title_frame, text="Syllabus & Standard Semiconductor Library • Built by Basi",
+        title_sub = ctk.CTkFrame(title_frame, fg_color="transparent")
+        title_sub.pack(anchor="w")
+
+        credits_lbl = ctk.CTkLabel(title_sub, text=f"v{APP_VERSION} • 59 Semiconductor Models • Built by Basi",
                                     font=ctk.CTkFont("Segoe UI", 11),
                                     text_color="#94a3b8")
-        credits_lbl.pack(anchor="w")
+        credits_lbl.pack(side="left")
+
+        self.update_badge_btn = ctk.CTkButton(
+            title_sub, text="⚡ Update Available", width=125, height=20,
+            font=ctk.CTkFont(size=10, weight="bold"),
+            fg_color="#7c3aed", hover_color="#6d28d9",
+            command=self._open_update_dialog_from_badge
+        )
 
         # LTspice Installation Path Directory Picker Frame
         pf = ctk.CTkFrame(hdr, fg_color="#111125", corner_radius=8, height=48)
@@ -641,12 +893,18 @@ class App(ctk.CTk):
                       fg_color="#16a34a", hover_color="#15803d",
                       command=self._install_all_components).pack(pady=(0, 8), padx=10, fill="x")
 
-        # Feedback Section
+        # Feedback & Updates Section
         fb_frame = ctk.CTkFrame(sb, fg_color="#131322", corner_radius=8)
         fb_frame.pack(fill="x", padx=10, pady=(0, 12))
+
+        ctk.CTkButton(fb_frame, text=f"🔄 Check for Updates (v{APP_VERSION})", height=28,
+                      font=ctk.CTkFont(size=10, weight="bold"),
+                      fg_color="#1e1e35", hover_color="#2d2d44",
+                      command=lambda: self._check_updates(manual=True)).pack(pady=(6, 4), padx=10, fill="x")
+
         ctk.CTkButton(fb_frame, text="💬 Request Component / Feedback", height=28, font=ctk.CTkFont(size=10, weight="bold"),
                       fg_color="#334155", hover_color="#475569",
-                      command=self._feedback_dialog).pack(pady=6, padx=10, fill="x")
+                      command=self._feedback_dialog).pack(pady=(0, 6), padx=10, fill="x")
 
         # ── 3. Main Center Display Panel ──────────────────────────────────────
         rp = ctk.CTkFrame(self, fg_color="#13131f", corner_radius=0)
