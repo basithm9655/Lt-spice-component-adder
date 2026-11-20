@@ -1,0 +1,3 @@
+* BC558 PNP Small Signal General Purpose Silicon Transistor SPICE Model
+* Vceo=30V, Ic=100mA, hFE=250
+.model BC558 PNP(Is=1.02e-13 Bf=250 Vaf=70 Ikf=0.1 Xtb=1.5 Cje=12p Cjc=6p Tf=0.5n Tr=20n)

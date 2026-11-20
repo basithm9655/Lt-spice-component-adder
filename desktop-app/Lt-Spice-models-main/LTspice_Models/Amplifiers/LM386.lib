@@ -1,0 +1,24 @@
+* LM386 Low Voltage Audio Power Amplifier SPICE Subcircuit Model
+* Pins: 1:GAIN1, 2:IN-, 3:IN+, 4:GND, 5:VOUT, 6:VS, 7:BYPASS, 8:GAIN8
+.subckt LM386 1 2 3 4 5 6 7 8
+q1 4 2 11 ddpnp
+r1 2 4 50k
+q2 4 3 12 ddpnp
+r2 3 4 50k
+q3 13 11 8 ddpnp
+q4 14 12 1 ddpnp
+r3 6 7 15k
+r4 7 8 15k
+r5 8 1 1.35k
+r7 1 5 15k
+q5 13 13 4 ddnpn
+q6 14 13 4 ddnpn
+q7 17 14 4 ddnpn
+c1 14 17 15p
+i1 6 10 dc 3m
+q10 18 17 5 ddpnp
+q13 6 10 5 ddnpn 10
+q14 5 18 4 ddnpn 10
+.model ddnpn NPN(Is=10f Bf=300 Vaf=100)
+.model ddpnp PNP(Is=10f Bf=150 Vaf=100)
+.ends LM386

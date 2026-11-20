@@ -1,0 +1,8 @@
+* TL082 High-Speed JFET-Input Operational Amplifier SPICE Subcircuit Model
+* Pinout: In+, In-, V+, V-, OUT
+.subckt TL082 1 2 3 4 5
+G1 0 6 1 2 0.3m
+R1 6 0 1Meg
+C1 6 0 10p
+E1 5 0 6 0 1
+.ends TL082

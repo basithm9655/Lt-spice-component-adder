@@ -1,0 +1,24 @@
+Version 4
+SymbolType CELL
+LINE Normal 24 40 28 48
+LINE Normal 20 52 24 40
+LINE Normal 20 52 28 48
+LINE Normal 40 80 16 64
+LINE Normal 16 80 16 16
+LINE Normal 16 32 64 0
+LINE Normal 16 48 0 48
+WINDOW 0 56 32 Left 2
+WINDOW 3 56 68 Left 2
+SYMATTR Value TIP32C
+SYMATTR Prefix Q
+SYMATTR ModelFile TIP32C.lib
+SYMATTR Description PNP Medium Power BJT (Complementary to TIP31C)
+PIN 64 0 NONE 0
+PINATTR PinName C
+PINATTR SpiceOrder 1
+PIN 0 48 NONE 0
+PINATTR PinName B
+PINATTR SpiceOrder 2
+PIN 64 96 NONE 0
+PINATTR PinName E
+PINATTR SpiceOrder 3

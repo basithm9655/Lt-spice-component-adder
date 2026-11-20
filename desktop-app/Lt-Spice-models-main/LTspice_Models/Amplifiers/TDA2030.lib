@@ -1,0 +1,27 @@
+* TDA2030 14W Hi-Fi Audio Power Amplifier Macromodel
+* Connections:
+*   1: Non-Inverting Input (+IN)
+*   2: Inverting Input (-IN)
+*   3: -Vs (Negative Supply / GND)
+*   4: Output (OUT)
+*   5: +Vs (Positive Supply)
+.SUBCKT TDA2030 1 2 5 3 4
+* Input Stage
+Rin 1 2 5MEG
+Ib1 1 0 0.2U
+Ib2 2 0 0.2U
+Vos 1 10 1M
+G1 0 11 10 2 0.01
+R1 11 0 100K
+C1 11 0 159P
+* Intermediate & Driver Stage (Gain = 80dB, Slew Rate ~ 8V/us)
+E1 12 0 11 0 100
+R2 12 13 100
+D1 13 5 D_CLP
+D2 3 13 D_CLP
+* Output Stage (Push-Pull Class AB)
+Ro 13 4 0.05
+* Supply Quiescent Current
+Iq 5 3 40M
+.MODEL D_CLP D(IS=1E-14 N=1)
+.ENDS TDA2030

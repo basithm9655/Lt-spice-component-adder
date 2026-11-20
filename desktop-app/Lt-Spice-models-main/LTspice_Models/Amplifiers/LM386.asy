@@ -1,0 +1,33 @@
+Version 4
+SymbolType CELL
+RECTANGLE Normal 48 96 -48 -96
+WINDOW 0 -36 -108 Left 2
+WINDOW 3 -36 100 Left 2
+SYMATTR Value LM386
+SYMATTR Prefix X
+SYMATTR ModelFile LM386.lib
+SYMATTR Description Low-Voltage Audio Power Amplifier (Syllabus: Power Amplifiers)
+PIN -48 -64 NONE 0
+PINATTR PinName GAIN1
+PINATTR SpiceOrder 1
+PIN -48 -32 NONE 0
+PINATTR PinName IN-
+PINATTR SpiceOrder 2
+PIN -48 0 NONE 0
+PINATTR PinName IN+
+PINATTR SpiceOrder 3
+PIN -48 32 NONE 0
+PINATTR PinName GND
+PINATTR SpiceOrder 4
+PIN 48 32 NONE 0
+PINATTR PinName VOUT
+PINATTR SpiceOrder 5
+PIN 48 0 NONE 0
+PINATTR PinName VS
+PINATTR SpiceOrder 6
+PIN 48 -32 NONE 0
+PINATTR PinName BYPASS
+PINATTR SpiceOrder 7
+PIN 48 -64 NONE 0
+PINATTR PinName GAIN8
+PINATTR SpiceOrder 8

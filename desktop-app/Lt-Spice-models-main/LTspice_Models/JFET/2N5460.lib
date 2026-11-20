@@ -1,0 +1,4 @@
+* 2N5460 P-Channel JFET SPICE Model
+* Syllabus topic: P-channel JFET construction and characteristics
+* Vto=2.5V, Beta=0.8mA/V^2
+.model 2N5460 PJF(Vto=2.5 Beta=0.8m Lambda=15m Rd=25 Rs=25 Cgs=3p Cgd=3p Is=1e-14)

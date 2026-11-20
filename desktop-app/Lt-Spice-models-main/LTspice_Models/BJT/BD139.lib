@@ -1,0 +1,4 @@
+* BD139 NPN Audio Driver Transistor SPICE Model
+* Syllabus topic: Class B, Class AB Push-Pull amplifiers
+* Vceo=80V, Ic=1.5A, hFE=160
+.model BD139 NPN(Is=2.3e-13 Bf=160 Vaf=120 Ikf=1.5 Xtb=1.5 Cje=60p Cjc=25p Tf=0.8n Tr=30n Rc=0.2 Rb=2)

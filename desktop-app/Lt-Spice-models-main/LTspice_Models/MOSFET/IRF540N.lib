@@ -1,0 +1,3 @@
+* IRF540N N-Channel Power MOSFET SPICE Model
+* Vdss=100V, Id=33A, Rds(on)=44mOhm
+.model IRF540N VDMOS(Vto=4.0 Kp=15 Rs=12m Rd=20m Cgs=1.5n Cgdmax=600p Cgdmin=50p)

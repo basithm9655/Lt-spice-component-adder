@@ -1,0 +1,8 @@
+* LM358 Low-Power Single-Supply Operational Amplifier SPICE Subcircuit Model
+* Pinout: In+, In-, V+, V-, OUT
+.subckt LM358 1 2 3 4 5
+G1 0 6 1 2 0.2m
+R1 6 0 500k
+C1 6 0 15p
+E1 5 0 6 0 1
+.ends LM358

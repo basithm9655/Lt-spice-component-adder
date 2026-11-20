@@ -1,0 +1,3 @@
+* BC547 NPN Small Signal General Purpose Silicon Transistor SPICE Model
+* Vceo=45V, Ic=100mA, hFE=300, low noise
+.model BC547 NPN(Is=7.04e-14 Bf=300 Vaf=90.7 Ikf=0.12 Xtb=1.5 Cje=11.5p Cjc=4.5p Tf=0.45n Tr=20n)

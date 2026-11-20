@@ -8,7 +8,7 @@ const links = {
     { label: 'Download', href: '/ltspice-component-adder.exe', download: true },
   ],
   Community: [
-    { label: 'GitHub (Models)', href: 'https://github.com/Gokul25122007/Lt-Spice-models', external: true },
+    { label: 'Models Library', href: '#components' },
     { label: 'Open Source', href: '#community' },
   ],
   Resources: [
@@ -204,13 +204,7 @@ export default function Footer() {
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'Inter', fontSize: 12, color: 'rgba(255,255,255,0.25)' }}>
-            <span>Built-in models by</span>
-            <a href="https://github.com/Gokul25122007" target="_blank" rel="noopener noreferrer" style={{
-              color: 'rgba(168,85,247,0.6)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 2,
-              transition: 'color 0.2s'
-            }} onMouseEnter={e => e.target.style.color = '#a855f7'} onMouseLeave={e => e.target.style.color = 'rgba(168,85,247,0.6)'}>
-              Gokul <ExternalLink size={10} />
-            </a>
+            <span>Verified SPICE Components & Models</span>
           </div>
         </div>
       </div>

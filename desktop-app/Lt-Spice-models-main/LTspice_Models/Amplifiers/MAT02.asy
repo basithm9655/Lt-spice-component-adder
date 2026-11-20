@@ -1,0 +1,27 @@
+Version 4
+SymbolType CELL
+RECTANGLE Normal 48 80 -48 -80
+WINDOW 0 -40 -90 Left 2
+WINDOW 3 -40 84 Left 2
+SYMATTR Value MAT02
+SYMATTR Prefix X
+SYMATTR ModelFile MAT02.lib
+SYMATTR Description Ultra-Low Noise Matched Differential BJT Pair
+PIN -48 -48 NONE 0
+PINATTR PinName C1
+PINATTR SpiceOrder 1
+PIN -48 0 NONE 0
+PINATTR PinName B1
+PINATTR SpiceOrder 2
+PIN -48 48 NONE 0
+PINATTR PinName E1
+PINATTR SpiceOrder 3
+PIN 48 48 NONE 0
+PINATTR PinName E2
+PINATTR SpiceOrder 4
+PIN 48 0 NONE 0
+PINATTR PinName B2
+PINATTR SpiceOrder 5
+PIN 48 -48 NONE 0
+PINATTR PinName C2
+PINATTR SpiceOrder 6

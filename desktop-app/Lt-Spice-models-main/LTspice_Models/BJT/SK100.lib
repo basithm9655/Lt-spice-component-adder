@@ -1,0 +1,4 @@
+* SK100 PNP Medium-Power General Purpose Silicon Transistor SPICE Model
+* CDIL / BEL complementary PNP transistor for push-pull amplifiers & CE characteristics
+* Vceo=50V, Ic=500mA, hFE=150
+.model SK100 PNP(Is=1.5e-13 Bf=150 Vaf=100 Ikf=0.5 Xtb=1.5 Cje=25p Cjc=12p Tf=0.4n Tr=15n Rb=5 Rc=0.4 Re=0.1)

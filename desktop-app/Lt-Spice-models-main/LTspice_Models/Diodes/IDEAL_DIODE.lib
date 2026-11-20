@@ -1,0 +1,3 @@
+* IDEAL_DIODE Model
+* Syllabus topic: The Ideal Diode (Vf=0V, zero forward resistance, infinite reverse resistance)
+.model IDEAL_DIODE D(Ron=1m Roff=100Meg Vfwd=0.0 Vrev=1000)

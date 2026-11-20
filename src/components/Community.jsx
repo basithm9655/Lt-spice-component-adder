@@ -49,7 +49,7 @@ export default function Community() {
             Got a working LTspice component? Share it directly from inside the app with one click.
             Help engineers worldwide and contribute to the open-source library.
           </p>
-          <a href="https://github.com/Gokul25122007/Lt-Spice-models" target="_blank" rel="noopener noreferrer" style={{
+          <a href="#components" style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10,
             padding: '14px 28px', borderRadius: 10,
             background: '#7b39fc', color: 'white', textDecoration: 'none',
@@ -61,7 +61,7 @@ export default function Community() {
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
             <GitBranch size={18} />
-            View on GitHub
+            Explore Component Library
           </a>
         </div>
 

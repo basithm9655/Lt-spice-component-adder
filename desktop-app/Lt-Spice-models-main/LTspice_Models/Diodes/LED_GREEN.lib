@@ -1,0 +1,2 @@
+* LED_GREEN Standard Green Light Emitting Diode SPICE Model
+.model LED_GREEN D(Is=1e-19 Rs=3.0 N=2.0 Cjo=15p Eg=2.2 Vpk=5 Iave=30m type=LED)

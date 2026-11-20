@@ -1,0 +1,4 @@
+* 2N3055 NPN High-Power Silicon Transistor SPICE Model
+* Boylestad / Malvino standard power amplifier & power supply transistor
+* Vceo=60V, Ic=15A, Pd=115W
+.model 2N3055 NPN(Is=2.5e-11 Bf=60 Vaf=70 Ikf=8.0 Xtb=1.5 Cje=400p Cjc=200p Tf=2n Rc=0.05 Rb=0.5)

@@ -1,0 +1,2 @@
+* LED_BLUE Standard Blue Light Emitting Diode SPICE Model
+.model LED_BLUE D(Is=1e-22 Rs=5.0 N=2.5 Cjo=20p Eg=3.2 Vpk=5 Iave=30m type=LED)

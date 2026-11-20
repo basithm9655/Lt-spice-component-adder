@@ -1,0 +1,3 @@
+* 2N3819 N-Channel General Purpose JFET SPICE Model
+* Classic textbook audio and RF small-signal amplifier
+.model 2N3819 NJF(Vto=-3.0 Beta=1.3m Lambda=20m Rd=12 Rs=12 Cgs=2.5p Cgd=2.5p Is=1e-14)

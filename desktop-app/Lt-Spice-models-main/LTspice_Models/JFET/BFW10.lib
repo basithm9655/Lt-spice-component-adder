@@ -1,0 +1,4 @@
+* BFW10 N-Channel JFET SPICE Model (Philips)
+* University lab standard for JFET drain and transfer characteristics & CS amplifier
+* Vto=-2.3V, Idss=10mA, Beta=1.1mA/V^2
+.model BFW10 NJF(Vto=-2.3 Beta=1.1m Lambda=23m Rd=7.8 Rs=7.8 Cgs=2p Cgd=2.2p Pb=0.99 Is=0.26f mfg=Philips)

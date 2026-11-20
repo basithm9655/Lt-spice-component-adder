@@ -1,0 +1,31 @@
+Version 4
+SymbolType CELL
+LINE Normal -32 -32 32 0
+LINE Normal 32 0 -32 32
+LINE Normal -32 32 -32 -32
+LINE Normal -48 -16 -32 -16
+LINE Normal -48 16 -32 16
+LINE Normal 0 -16 0 -48
+LINE Normal 0 16 0 48
+LINE Normal 32 0 48 0
+WINDOW 0 16 -32 Left 2
+WINDOW 3 16 32 Left 2
+SYMATTR Value TDA2030
+SYMATTR Prefix X
+SYMATTR Description 14W Hi-Fi Class AB Audio Power Amplifier
+SYMATTR ModelFile TDA2030.lib
+PIN -48 16 LEFT 8
+PINATTR PinName +IN
+PINATTR SpiceOrder 1
+PIN -48 -16 LEFT 8
+PINATTR PinName -IN
+PINATTR SpiceOrder 2
+PIN 0 -48 TOP 8
+PINATTR PinName +VS
+PINATTR SpiceOrder 3
+PIN 0 48 BOTTOM 8
+PINATTR PinName -VS
+PINATTR SpiceOrder 4
+PIN 48 0 RIGHT 8
+PINATTR PinName OUT
+PINATTR SpiceOrder 5

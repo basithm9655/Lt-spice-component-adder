@@ -1,0 +1,3 @@
+* 1N270 Germanium Gold-Bonded Diode SPICE Model
+* Low forward voltage drop, fast switching, high forward conductance
+.model 1N270 D(Is=1.24u Rs=2.42 N=1.675 Cjo=4.0p Eg=0.67 Bv=100 Ibv=1m Tt=21n type=Germanium mfg=Transitron)

@@ -1,0 +1,3 @@
+* 2N7000 N-Channel Enhancement-Mode MOSFET SPICE Model
+* Small signal switching and amplifier applications
+.model 2N7000 VDMOS(Vto=2.1 Kp=0.25 Rs=0.5 Rd=1.5 Cgs=35p Cgdmax=20p Cgdmin=5p)

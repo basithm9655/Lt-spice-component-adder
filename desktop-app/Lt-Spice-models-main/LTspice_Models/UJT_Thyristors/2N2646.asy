@@ -1,0 +1,23 @@
+Version 4
+SymbolType CELL
+LINE Normal 24 16 24 80
+LINE Normal 24 16 48 0
+LINE Normal 24 80 48 96
+LINE Normal 0 48 24 64
+LINE Normal 12 44 20 62
+LINE Normal 6 56 20 62
+WINDOW 0 40 24 Left 2
+WINDOW 3 40 68 Left 2
+SYMATTR Value 2N2646
+SYMATTR Prefix X
+SYMATTR ModelFile 2N2646.lib
+SYMATTR Description Unijunction Transistor UJT (Syllabus: Relaxation Oscillator)
+PIN 0 48 NONE 0
+PINATTR PinName E
+PINATTR SpiceOrder 1
+PIN 48 96 NONE 0
+PINATTR PinName B1
+PINATTR SpiceOrder 2
+PIN 48 0 NONE 0
+PINATTR PinName B2
+PINATTR SpiceOrder 3

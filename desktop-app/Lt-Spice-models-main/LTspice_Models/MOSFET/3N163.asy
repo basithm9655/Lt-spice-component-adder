@@ -1,0 +1,27 @@
+Version 4
+SymbolType CELL
+LINE Normal 48 24 48 0
+LINE Normal 16 24 48 24
+LINE Normal 16 48 48 48
+LINE Normal 16 72 48 72
+LINE Normal 48 72 48 96
+LINE Normal 0 80 8 80
+LINE Normal 8 16 8 80
+LINE Normal 16 16 16 32
+LINE Normal 16 40 16 56
+LINE Normal 16 64 16 80
+WINDOW 0 56 32 Left 2
+WINDOW 3 56 72 Left 2
+SYMATTR Value 3N163
+SYMATTR Prefix M
+SYMATTR ModelFile 3N163.lib
+SYMATTR Description N-Channel Depletion Mode MOSFET (Syllabus Requirement)
+PIN 48 0 NONE 0
+PINATTR PinName D
+PINATTR SpiceOrder 1
+PIN 0 80 NONE 0
+PINATTR PinName G
+PINATTR SpiceOrder 2
+PIN 48 96 NONE 0
+PINATTR PinName S
+PINATTR SpiceOrder 3

@@ -1,0 +1,3 @@
+* BZX55C6V2 6.2V 500mW Zener Diode SPICE Model
+* Zero temperature coefficient Zener reference
+.model BZX55C6V2 D(Is=1e-13 Rs=6 Bv=6.2 Ibv=5m Nbv=1.1 Cjo=60p)

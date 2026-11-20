@@ -1,0 +1,4 @@
+* SL100 NPN Medium-Power General Purpose Silicon Transistor SPICE Model
+* CDIL / BEL standard laboratory transistor for CE/CB/CC characteristics & amplifier design
+* Vceo=50V, Ic=500mA, hFE=150, fT=100MHz
+.model SL100 NPN(Is=1.5e-13 Bf=150 Vaf=100 Ikf=0.5 Xtb=1.5 Cje=25p Cjc=12p Tf=0.4n Tr=15n Rb=5 Rc=0.4 Re=0.1)

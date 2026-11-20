@@ -1,0 +1,3 @@
+* BC548 NPN Small Signal General Purpose Silicon Transistor SPICE Model
+* Vceo=30V, Ic=100mA, hFE=250
+.model BC548 NPN(Is=7.04e-14 Bf=250 Vaf=80 Ikf=0.12 Xtb=1.5 Cje=11.5p Cjc=4.5p Tf=0.45n Tr=20n)

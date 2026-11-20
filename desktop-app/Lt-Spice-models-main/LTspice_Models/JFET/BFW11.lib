@@ -1,0 +1,3 @@
+* BFW11 N-Channel JFET SPICE Model (Philips)
+* Vto=-2.1V, Beta=1.2mA/V^2, Rd=17
+.model BFW11 NJF(Vto=-2.1 Beta=1.2m Lambda=25m Rd=17 Rs=17 Cgs=2.3p Cgd=2.3p Pb=0.93 Is=0.22f mfg=Philips)

@@ -1,0 +1,9 @@
+* 2N6027 Programmable Unijunction Transistor (PUT) SPICE Model
+* Pinout: 1=Anode, 2=Gate, 3=Cathode
+.SUBCKT 2N6027 1 2 3
+Q1 3 2 4 NPN_PUT
+Q2 2 4 1 PNP_PUT
+R1 2 4 100k
+.model NPN_PUT NPN(Bf=80 Is=1e-14 Vaf=60)
+.model PNP_PUT PNP(Bf=40 Is=1e-14 Vaf=60)
+.ENDS 2N6027

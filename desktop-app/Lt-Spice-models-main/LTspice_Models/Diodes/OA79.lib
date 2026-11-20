@@ -1,0 +1,3 @@
+* OA79 Germanium Point-Contact Detector Diode SPICE Model
+* Classic European/Indian laboratory AM detector & clipper diode
+.model OA79 D(Is=12.5u Rs=40 N=2.2 Cjo=1p Eg=0.67 Bv=45 Ibv=100u type=Germanium mfg=Philips)

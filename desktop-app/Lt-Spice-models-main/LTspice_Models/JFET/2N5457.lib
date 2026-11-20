@@ -1,0 +1,2 @@
+* 2N5457 N-Channel Audio Small Signal JFET SPICE Model
+.model 2N5457 NJF(Vto=-2.0 Beta=0.9m Lambda=15m Rd=15 Rs=15 Cgs=3p Cgd=3p Is=1e-14)

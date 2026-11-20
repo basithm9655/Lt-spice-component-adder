@@ -1,0 +1,3 @@
+* BS170 N-Channel Enhancement-Mode MOSFET SPICE Model
+* Fast switching and linear amplifier applications
+.model BS170 VDMOS(Vto=2.0 Kp=0.30 Rs=0.4 Rd=1.2 Cgs=40p Cgdmax=25p Cgdmin=6p)

@@ -3,34 +3,87 @@ import { CheckCircle, ExternalLink } from 'lucide-react'
 
 const categories = [
   {
-    name: 'Flipflop',
-    color: '#7b39fc',
-    icon: '⊞',
+    name: 'Diodes',
+    color: '#38bdf8',
+    icon: '⟁',
     components: [
-      { name: 'DFlipFlop', desc: 'D-type flip-flop with clock, set, reset' },
-      { name: 'JK Flip-Flop', desc: 'JK flip-flop for sequential logic' },
+      { name: '1N34A', desc: 'Germanium point-contact diode (Vf ~0.25V)' },
+      { name: 'OA91', desc: 'Gold-bonded Germanium detector diode' },
+      { name: '1N270', desc: 'Germanium gold-bonded low-leakage diode' },
+      { name: '1N60', desc: 'Germanium radio detector & clipper diode' },
+      { name: 'IDEAL_DIODE', desc: 'Ideal diode model for textbook theory analysis' },
+      { name: 'BZX55C5V1', desc: '5.1V Zener diode for voltage regulation' },
+      { name: '1N3716', desc: 'Tunnel diode with negative resistance (NDR)' },
+      { name: 'BB105', desc: 'Varactor / varicap tuning diode' },
+      { name: 'BAR64', desc: 'PIN diode for RF attenuation & switching' },
+      { name: 'LED (RGBY)', desc: 'Calibrated Red, Green, Blue, Yellow LEDs' },
     ],
   },
   {
-    name: 'OPAMP',
+    name: 'BJT Transistors',
+    color: '#10b981',
+    icon: '⎇',
+    components: [
+      { name: 'SL100', desc: 'Standard lab NPN medium-power transistor' },
+      { name: 'SK100', desc: 'Complementary lab PNP medium-power transistor' },
+      { name: 'BC547 / BC548', desc: 'Universal audio & small-signal NPN' },
+      { name: 'BC557 / BC558', desc: 'Universal audio & small-signal PNP' },
+      { name: 'BD139 / BD140', desc: 'Complementary pair for Class B/AB push-pull' },
+      { name: 'TIP31C / TIP32C', desc: 'Complementary audio power amplifier BJTs' },
+      { name: '2N3055 / MJ2955', desc: 'High-power output transistors (TO-3)' },
+    ],
+  },
+  {
+    name: 'FET & MOSFET',
+    color: '#a855f7',
+    icon: '⧉',
+    components: [
+      { name: 'BFW10', desc: 'Classic syllabus N-channel JFET (Vp ~ -2.3V)' },
+      { name: 'BFW11', desc: 'N-channel JFET for amplifier experiments' },
+      { name: '2N3819', desc: 'General-purpose N-channel JFET' },
+      { name: '2N5460', desc: 'P-channel JFET for complementary circuits' },
+      { name: '2N7000 / BS170', desc: 'N-channel enhancement MOSFETs' },
+      { name: 'IRF540N / IRF9540N', desc: 'Power MOSFET complementary pair' },
+      { name: '3N163', desc: 'Depletion-mode MOSFET for syllabus study' },
+    ],
+  },
+  {
+    name: 'UJT & Oscillators',
+    color: '#ec4899',
+    icon: '⚡',
+    components: [
+      { name: '2N2646', desc: 'Unijunction transistor (UJT) relaxation oscillator' },
+      { name: '2N2647', desc: 'Precision pulse & timing UJT' },
+      { name: '2N6027', desc: 'Programmable unijunction transistor (PUT)' },
+      { name: 'BT136', desc: '600V 4A TRIAC for AC phase control' },
+      { name: '2N5060', desc: 'Sensitive gate SCR for latching & triggering' },
+      { name: 'DB3', desc: 'Bidirectional trigger DIAC (Vbo ~ 32V)' },
+    ],
+  },
+  {
+    name: 'Amplifiers & OPAMP',
     color: '#06b6d4',
     icon: '◁▷',
     components: [
+      { name: 'LM386', desc: 'Low-voltage audio power amplifier IC' },
+      { name: 'TDA2030', desc: '14W Hi-Fi Class AB audio amplifier' },
+      { name: 'MAT02', desc: 'Ultra-low noise matched differential BJT pair' },
       { name: 'LM741', desc: 'Classic general-purpose op-amp' },
-      { name: 'LM317', desc: 'Adjustable voltage regulator' },
-      { name: 'LM7905', desc: 'Negative 5V voltage regulator' },
-      { name: 'LM7912', desc: 'Negative 12V voltage regulator' },
-      { name: 'LM7915', desc: 'Negative 15V voltage regulator' },
+      { name: 'TL082', desc: 'Dual high-speed JFET input op-amp' },
+      { name: 'LM317', desc: '1.5A adjustable positive voltage regulator' },
+      { name: 'LM7905/12/15', desc: 'Negative voltage regulators (-5V, -12V, -15V)' },
     ],
   },
   {
-    name: '74LSx Series',
+    name: 'Digital & Counters',
     color: '#f59e0b',
     icon: '▦',
     components: [
-      { name: '74LS90', desc: 'Decade counter / divide-by-12' },
+      { name: '74LS90', desc: 'Decade counter / divide-by-10 & divide-by-12' },
       { name: '74LS93', desc: '4-bit binary counter' },
       { name: '74LS95', desc: '4-bit parallel access shift register' },
+      { name: 'DFlipFlop', desc: 'D-type flip-flop with clock, set, reset' },
+      { name: 'JK Flip-Flop', desc: 'JK flip-flop for sequential logic circuits' },
     ],
   },
 ]
@@ -79,14 +132,8 @@ export default function Components() {
             fontFamily: 'Inter', color: 'rgba(255,255,255,0.6)', fontSize: 17,
             maxWidth: 540, margin: '16px auto 8px', lineHeight: 1.7,
           }}>
-            Curated models contributed by Gokul. Browse by category and install with one click.
+            Curated semiconductor and IC models covering syllabus and laboratory standards. Browse by category and install with one click.
           </p>
-          <a href="https://github.com/Gokul25122007/Lt-Spice-models/tree/main/LTspice_Models" target="_blank" rel="noopener noreferrer" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6,
-            fontFamily: 'Inter', fontSize: 13, color: 'rgba(255,255,255,0.4)', textDecoration: 'none'
-          }}>
-            Built-in models by Gokul <ExternalLink size={12} />
-          </a>
         </div>
 
         {/* Layout */}

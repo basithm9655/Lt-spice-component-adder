@@ -1,0 +1,2 @@
+* LED_RED Standard Red Light Emitting Diode SPICE Model
+.model LED_RED D(Is=1e-18 Rs=2.5 N=1.8 Cjo=15p Eg=1.9 Vpk=5 Iave=30m type=LED)
