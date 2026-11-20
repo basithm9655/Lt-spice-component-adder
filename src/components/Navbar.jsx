@@ -85,7 +85,7 @@ export default function Navbar() {
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
             <WindowsIcon size={15} />
-            Download Free (.zip)
+            Download Free
           </a>
 
           {/* Hamburger */}
@@ -119,7 +119,7 @@ export default function Navbar() {
           boxShadow: '0 6px 24px rgba(123,57,252,0.5)',
         }}>
           <WindowsIcon size={18} />
-          Download for Windows (.zip)
+          Download for Windows
         </a>
       </div>
 

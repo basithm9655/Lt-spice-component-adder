@@ -358,7 +358,7 @@ export default function Components() {
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'scale(1.04)' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
-            Download Free (.zip)
+            Download Free for Windows
           </a>
         </div>
 

@@ -119,50 +119,36 @@ export default function Hero() {
 
         {/* Buttons */}
         <div className="hero-buttons animate-fadeInUp delay-300" style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, marginBottom: 64
+          display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center', marginBottom: 64
         }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center' }}>
-            <a href="/ltspice-component-adder.zip" download className="hero-btn" style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-              padding: '16px 32px', borderRadius: 12,
-              background: '#7b39fc', color: 'white',
-              fontFamily: 'Cabin', fontWeight: 600, fontSize: 16, textDecoration: 'none',
-              boxShadow: '0 8px 32px rgba(123,57,252,0.5)',
-              transition: 'opacity 0.2s, transform 0.2s'
-            }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'scale(1.05)' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
-            >
-              <WindowsIcon size={20} />
-              Download for Windows (.zip)
-            </a>
-            <a href="#features" className="hero-btn" style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-              padding: '16px 32px', borderRadius: 12,
-              background: '#2b2344', color: '#f6f7f9',
-              border: '1px solid rgba(123,57,252,0.3)', textDecoration: 'none',
-              fontFamily: 'Cabin', fontWeight: 600, fontSize: 16,
-              transition: 'background 0.2s'
-            }}
-              onMouseEnter={e => e.currentTarget.style.background = '#362c54'}
-              onMouseLeave={e => e.currentTarget.style.background = '#2b2344'}
-              onClick={e => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' }) }}
-            >
-              Explore Features
-            </a>
-          </div>
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 12, fontSize: 13,
-            color: 'rgba(255,255,255,0.4)', fontFamily: 'Inter'
-          }}>
-            <span>✨ No SmartScreen warning (extract & run)</span>
-            <span>•</span>
-            <a href="/ltspice-component-adder.exe" download style={{
-              color: 'rgba(255,255,255,0.6)', textDecoration: 'underline'
-            }}>
-              Direct .exe download
-            </a>
-          </div>
+          <a href="/ltspice-component-adder.zip" download className="hero-btn" style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+            padding: '16px 32px', borderRadius: 12,
+            background: '#7b39fc', color: 'white',
+            fontFamily: 'Cabin', fontWeight: 600, fontSize: 16, textDecoration: 'none',
+            boxShadow: '0 8px 32px rgba(123,57,252,0.5)',
+            transition: 'opacity 0.2s, transform 0.2s'
+          }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'scale(1.05)' }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
+          >
+            <WindowsIcon size={20} />
+            Download for Windows
+          </a>
+          <a href="#components" className="hero-btn" style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+            padding: '16px 32px', borderRadius: 12,
+            background: '#2b2344', color: '#f6f7f9',
+            border: '1px solid rgba(123,57,252,0.3)', textDecoration: 'none',
+            fontFamily: 'Cabin', fontWeight: 600, fontSize: 16,
+            transition: 'background 0.2s'
+          }}
+            onMouseEnter={e => e.currentTarget.style.background = '#362c54'}
+            onMouseLeave={e => e.currentTarget.style.background = '#2b2344'}
+            onClick={e => { e.preventDefault(); document.getElementById('components')?.scrollIntoView({ behavior: 'smooth' }) }}
+          >
+            View 59 Components
+          </a>
         </div>
 
         {/* Stats */}

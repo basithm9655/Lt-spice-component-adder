@@ -92,13 +92,13 @@ export default function Footer() {
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
             <WindowsIcon />
-            Download for Windows (.zip)
+            Download for Windows — Free
           </a>
           <p style={{
             fontFamily: 'Inter', fontSize: 13, color: 'rgba(255,255,255,0.4)',
             marginTop: 16, margin: '16px auto 0'
           }}>
-            Windows 10/11 · Portable ZIP package · No SmartScreen block · <a href="/ltspice-component-adder.exe" download style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'underline' }}>or direct .exe</a>
+            Windows 10 & 11 · Free & Portable · 59 Verified Semiconductor Models
           </p>
         </div>
       </div>

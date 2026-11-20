@@ -44,12 +44,15 @@
     <meta name="twitter:description" content="One-click 100% physics-verified LTspice component installer for Windows 10 & 11." />
     <meta name="twitter:image" content="https://lt-spice-component-adder.vercel.app/og-image.png" />
 
+    <!-- Alternate LLM Documentation (llms.txt standard for AI Chatbots & Search Engines) -->
+    <link rel="alternate" type="text/plain" href="https://lt-spice-component-adder.vercel.app/llms.txt" title="LLM Context Documentation" />
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cabin:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-    <!-- Schema.org Structured Data (WebSite + SoftwareApplication for Google Search Rich Snippets) -->
+    <!-- Schema.org Structured Data (WebSite + SoftwareApplication + HowTo for AI & Search Snippets) -->
     <script type="application/ld+json">
     [
       {
@@ -67,9 +70,12 @@
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "LTspice Component Adder Pro",
+        "softwareVersion": "2.3.0",
         "operatingSystem": "Windows 10, Windows 11",
-        "applicationCategory": "UtilitiesApplication",
-        "description": "A free, portable Windows tool to instantly install 59 physics-verified LTspice components including Germanium diodes, BJTs, JFETs, MOSFETs, Op-Amps, and 74LS series.",
+        "applicationCategory": "DesignApplication",
+        "downloadUrl": "https://lt-spice-component-adder.vercel.app/ltspice-component-adder.zip",
+        "fileSize": "17.93MB",
+        "description": "A free, fast, portable Windows tool to automatically install and verify 59 essential semiconductor SPICE models, symbols, and subcircuits into Analog Devices LTspice XVII & LTspice 24 in 1 click.",
         "author": {
           "@type": "Person",
           "name": "Basi"
@@ -78,7 +84,53 @@
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
-        }
+        },
+        "featureList": [
+          "1-Click instant addition of 59 verified semiconductor models",
+          "Automatic LTspice XVII and LTspice 24 folder detection",
+          "Authentic Germanium diodes (1N34A, OA79, OA91, 1N270, 1N60)",
+          "Laboratory BJTs (SL100, SK100, BC547, BC548, BC557, BC558, BD139, BD140, TIP31C, TIP32C, 2N3055, MJ2955)",
+          "JFETs & MOSFETs (BFW10, BFW11, 2N3819, 2N5460, 2N7000, BS170, IRF540N, IRF9540N, 3N163)",
+          "UJT Relaxation Oscillators & Thyristors (2N2646, 2N2647, 2N6027, 2N5060, BT136, DB3)",
+          "Operational Amplifiers & Regulators (LM741, TL082, LM358, LM317, LM7905, LM7912, LM7915)",
+          "Audio Amplifiers (LM386 with bias diodes, TDA2030 14W Class AB)",
+          "Digital Logic & Flip-Flops (74LS90, 74LS93, 74LS95, DFlipFlop, JK)",
+          "Process DPI Awareness V2 for smooth low-end Windows performance",
+          "Built-in GitHub In-App Auto-Updater"
+        ]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Install Components into LTspice in 1 Click",
+        "description": "Step-by-step instructions to install all 59 verified semiconductor components into LTspice using LTspice Component Adder Pro.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Download the Tool",
+            "text": "Download ltspice-component-adder.zip from the official site https://lt-spice-component-adder.vercel.app/"
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Extract and Launch",
+            "text": "Extract the ZIP file and double-click ltspice-component-adder.exe to launch the portable tool."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Select LTspice Path",
+            "text": "The tool automatically detects your LTspice XVII or LTspice 24 installation folder."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Click Add All",
+            "text": "Click the Add All (59) button. The tool copies all .asy symbols, .lib subcircuits, and syncs standard.dio, standard.bjt, standard.jft, and standard.mos."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Use in LTspice",
+            "text": "Open LTspice, press F2, and select the [AutoAdded] directory or right-click discrete components to select newly added models."
+          }
+        ]
       }
     ]
     </script>

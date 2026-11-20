@@ -1,0 +1,131 @@
+# LTspice Component Adder Pro (v2.3.0)
+
+> A fast, lightweight, free desktop tool for Windows 10 & 11 that installs and verifies 59 essential semiconductor SPICE models, symbols (.asy), and subcircuits (.lib) into Analog Devices LTspice XVII & LTspice 24 in 1 click.
+
+- Website: https://lt-spice-component-adder.vercel.app/
+- Download (Portable ZIP): https://lt-spice-component-adder.vercel.app/ltspice-component-adder.zip
+- Download (Standalone EXE): https://lt-spice-component-adder.vercel.app/ltspice-component-adder.exe
+- GitHub Repository: https://github.com/basithm9655/Lt-spice-component-adder
+- Latest Release: https://github.com/basithm9655/Lt-spice-component-adder/releases/tag/v2.3.0
+- Author: Basi
+- Compatibility: Windows 10 & Windows 11 (64-bit and 32-bit), LTspice XVII, LTspice 24
+
+---
+
+## What Problem Does It Solve?
+Standard LTspice installations omit dozens of fundamental semiconductor components universally required in undergraduate electronics engineering (EDC, LIC, Analog & Digital circuits) laboratories. Students and engineers are typically forced to hunt for untrusted third-party SPICE models across legacy web forums.
+
+LTspice Component Adder Pro solves this by bundling 59 authentic, physically-verified SPICE models and symbols, automatically configuring symbols into `lib/sym/AutoAdded`, subcircuits into `lib/sub/`, and upserting discrete models into LTspice's native right-click database pickers (`standard.dio`, `standard.bjt`, `standard.jft`, `standard.mos`).
+
+---
+
+## Installation & How to Use (1-Click)
+
+1. **Download**: Download `ltspice-component-adder.zip` from https://lt-spice-component-adder.vercel.app/ltspice-component-adder.zip.
+2. **Extract & Launch**: Extract the ZIP file and run `ltspice-component-adder.exe`. No installation or administrative privileges required.
+3. **Auto-Detection**: The tool automatically locates the LTspice directory:
+   - LTspice 24: `%LOCALAPPDATA%\Programs\ADI\LTspice`
+   - LTspice XVII: `%USERPROFILE%\Documents\LTspiceXVII` or `C:\Program Files\LTC\LTspiceXVII`
+4. **1-Click Install**: Click **"⚡ Add All (59)"**. The tool creates `.bak` backups and installs all symbols and models within 2 seconds.
+5. **Use in LTspice**:
+   - Open LTspice.
+   - Press `F2` (Component). Select `[AutoAdded]` to place symbols for ICs, op-amps, flip-flops, and counters.
+   - For discrete diodes, BJTs, JFETs, and MOSFETs, right-click any diode/transistor symbol on the schematic to pick the added components directly from the native library.
+
+---
+
+## Complete Catalog of 59 Verified Components
+
+### 1. Diodes (16 Components)
+- **1N34A**: Authentic Germanium point-contact diode ($E_g = 0.67\text{ eV}, V_f \approx 0.25\text{V} @ 1\text{mA}$). Classic detector & crystal radio.
+- **OA79**: Germanium point-contact diode ($E_g = 0.67\text{ eV}$, Mullard).
+- **OA91**: Germanium diode with authentic low forward knee ($E_g = 0.67\text{ eV}, R_s = 3.5\,\Omega$).
+- **1N270**: High-current Germanium gold-bonded diode ($E_g = 0.67\text{ eV}, 200\text{mA}$ peak).
+- **1N60**: Germanium RF/AM detector diode ($E_g = 0.67\text{ eV}$).
+- **1N3716**: Esaki Germanium Tunnel Diode featuring negative differential resistance ($I_p = 1.0\text{mA}, I_v = 0.14\text{mA}$) for microwave & relaxation oscillators.
+- **BAR64**: High-frequency RF PIN diode ($B_v = 150\text{V}$, Infineon) for RF switches and attenuators.
+- **BB105**: VHF/UHF Varactor tuning diode ($C_{j0} = 18\text{pF}$, Philips) for LC voltage-controlled oscillators (VCO).
+- **BZX55C3V3**: 3.3V Zener diode with negative temperature coefficient ($T_{bv1} = -0.48\text{mV}/^\circ\text{C}$).
+- **BZX55C5V1**: 5.1V Zero-tempco Zener voltage regulator ($T_{bv1} \approx 0$).
+- **BZX55C6V2**: 6.2V Avalanche Zener with positive temperature coefficient ($T_{bv1} = +0.32\text{mV}/^\circ\text{C}$).
+- **BZX55C9V1**: 9.1V Avalanche Zener regulator ($T_{bv1} = +0.49\text{mV}/^\circ\text{C}$).
+- **LED_RED**: Visible red light emitting diode ($V_f \approx 1.80\text{V} @ 20\text{mA}$).
+- **LED_GREEN**: Visible green light emitting diode ($V_f \approx 2.12\text{V} @ 20\text{mA}$).
+- **LED_BLUE**: Visible blue GaN light emitting diode ($V_f \approx 3.12\text{V} @ 20\text{mA}$).
+- **IDEAL_DIODE**: Academic ideal diode ($R_{on} = 1\text{m}\Omega, R_{off} = 100\text{M}\Omega, V_{fwd} = 0.0\text{V}$) for circuit theory and textbook rectifiers.
+
+### 2. Bipolar Junction Transistors (12 Components)
+- **SL100**: Medium power NPN transistor ($B_f = 150, I_c = 500\text{mA}$, CDIL) used universally across Indian & Asian engineering curricula.
+- **SK100**: Medium power PNP complement to SL100 ($B_f = 150$, CDIL).
+- **BC547**: Low-noise NPN general-purpose small signal amplifier ($B_f = 300, V_{ceo} = 45\text{V}$, Philips).
+- **BC548**: General purpose NPN transistor ($B_f = 250, V_{ceo} = 30\text{V}$).
+- **BC557**: Low-noise PNP complementary transistor ($B_f = 300, V_{ceo} = 45\text{V}$).
+- **BC558**: General purpose PNP transistor ($B_f = 250, V_{ceo} = 30\text{V}$).
+- **BD139**: Audio driver medium-power NPN ($I_c = 1.5\text{A}, V_{ceo} = 80\text{V}$, ST).
+- **BD140**: Audio driver medium-power PNP complement ($I_c = 1.5\text{A}, V_{ceo} = 80\text{V}$).
+- **TIP31C**: 100V 3A NPN power transistor ($T_f = 53\text{ns}, f_T \approx 3\text{MHz}$, OnSemi) for Class AB push-pull amplifiers.
+- **TIP32C**: 100V 3A PNP power complement ($T_f = 53\text{ns}$, OnSemi).
+- **2N3055**: TO-3 15A 115W NPN power transistor ($T_f = 64\text{ns}, f_T \approx 2.5\text{MHz}$, Motorola) for linear power supplies.
+- **MJ2955**: TO-3 15A 115W PNP power complement ($T_f = 64\text{ns}$, Motorola).
+
+### 3. Junction Field Effect Transistors (5 Components)
+- **BFW10**: N-channel depletion JFET ($V_p = -2.3\text{V}, I_{dss} \approx 10\text{mA}$, Philips) for low-noise RF & small-signal audio stages.
+- **BFW11**: N-channel JFET ($V_p = -2.1\text{V}$, Philips).
+- **2N3819**: Classic VHF/Audio N-channel JFET ($V_p = -3.0\text{V}$, Fairchild).
+- **2N5457**: General-purpose audio N-channel JFET ($V_p = -2.0\text{V}$, OnSemi).
+- **2N5460**: P-channel depletion JFET with authentic negative pinch-off parameter ($V_{to} = -2.5\text{V}$, OnSemi).
+
+### 4. MOSFETs (5 Components)
+- **2N7000**: Small-signal N-channel enhancement mode VDMOS ($V_{th} = 2.1\text{V}, R_{ds(on)} = 1.2\,\Omega$, OnSemi).
+- **BS170**: N-channel enhancement mode VDMOS ($V_{th} = 2.0\text{V}, R_{ds(on)} = 1.2\,\Omega$, OnSemi).
+- **IRF540N**: 100V 33A N-channel power VDMOS ($R_{ds(on)} = 44\text{m}\Omega$, International Rectifier).
+- **IRF9540N**: -100V -23A P-channel power VDMOS ($R_{ds(on)} = 117\text{m}\Omega$, International Rectifier).
+- **3N163**: Depletion/Enhancement MOSFET ($V_{th} = -2.5\text{V}$, Siliconix).
+
+### 5. Operational Amplifiers & Regulators (7 Components)
+- **LM741**: Industry-standard compensated bipolar operational amplifier (transistor-level macromodel).
+- **TL082**: High-speed dual JFET-input operational amplifier ($16\text{V}/\mu\text{s}$ slew rate, $3\text{MHz}$ GBW).
+- **LM358**: Single-supply low-power dual operational amplifier (ground-sensing input stage).
+- **LM317**: 1.2V to 37V 1.5A adjustable positive linear voltage regulator with internal bandgap reference.
+- **LM7905**: -5V 1.5A fixed negative voltage regulator.
+- **LM7912**: -12V 1.5A fixed negative voltage regulator.
+- **LM7915**: -15V 1.5A fixed negative voltage regulator.
+
+### 6. Power & Audio Amplifiers (3 Components)
+- **LM386**: Low-voltage audio power amplifier ($V_s = 4\text{V}-12\text{V}$, internal $1.35\text{k}\Omega$ gain resistor, $A_v = 20-200$). Repaired with active bias diodes $D_1, D_2$.
+- **MAT02**: Ultra-matched low-noise NPN transistor pair ($V_{os} < 50\mu\text{V}$) for instrumentation front-ends.
+- **TDA2030**: 14W Class-AB Hi-Fi audio amplifier ($V_s = \pm 14\text{V}, 8\text{V}/\mu\text{s}$ slew rate, low output impedance).
+
+### 7. UJT & Thyristors (6 Components)
+- **2N2646**: Unijunction Transistor (UJT) with authentic negative resistance conductivity modulation macromodel ($\eta \approx 0.65, R_{bb} \approx 6.09\text{k}\Omega$) for relaxation oscillators.
+- **2N2647**: Precision UJT ($\eta \approx 0.70$) for triggering thyristors.
+- **2N6027**: Programmable Unijunction Transistor (PUT) with adjustable standoff ratio via external gate resistors.
+- **2N5060**: 100V 0.8A Sensitive-Gate Silicon Controlled Rectifier (SCR) ($I_{gt} \approx 200\mu\text{A}$).
+- **BT136**: 600V 4A 4-quadrant TRIAC for AC light dimmers and motor speed control.
+- **DB3**: 32V bidirectional trigger DIAC for TRIAC phase firing circuits.
+
+### 8. Digital Counters & Flip-Flops (5 Components)
+- **74LS90**: BCD / Decade Ripple Counter (Divide-by-2 and Divide-by-5 stages).
+- **74LS93**: 4-bit Binary Ripple Counter (Divide-by-2 and Divide-by-8 stages).
+- **74LS95**: 4-bit Parallel-Access Shift Register.
+- **DFlipFlop**: D-Type positive-edge triggered flip-flop with Set and Reset.
+- **JK**: JK Master-Slave flip-flop with asynchronous Preset and Clear.
+
+---
+
+## Textbook & Syllabus Alignments
+The 59 models directly correspond to circuits in:
+1. Albert Malvino, David Bates, Patrick Hoppe — *Electronic Principles* (McGraw Hill).
+2. Robert L. Boylestad, Louis Nashelsky — *Electronic Devices and Circuit Theory* (Pearson).
+3. Thomas L. Floyd — *Electronic Devices* (Pearson).
+4. Jacob Millman, Christos Halkias — *Integrated Electronics* (Tata McGraw-Hill).
+5. Donald Neamen — *Electronic Devices: Analysis and Design* (McGraw Hill).
+
+---
+
+## Technical Features
+- **Process DPI Awareness V2**: Crisp vector rendering on high-DPI Windows 10 & 11 screens without blur.
+- **100ms Debounced Instant Search**: Sub-millisecond filtering across model names, categories, and descriptions.
+- **Multi-Encoding Native DB Engine**: Accurately detects UTF-16LE, UTF-8, and Latin-1 in LTspice databases.
+- **Automatic Backups**: Creates timestamped `.bak` files before touching any LTspice configuration file.
+- **In-App GitHub Auto-Updater**: Checks GitHub Releases API in the background and applies 1-click self-replacing updates on Windows.
