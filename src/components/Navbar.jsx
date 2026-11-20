@@ -72,7 +72,7 @@ export default function Navbar() {
           </div>
 
           {/* Download button */}
-          <a href="/ltspice-component-adder.exe" download style={{
+          <a href="/ltspice-component-adder.zip" download style={{
             display: 'flex', alignItems: 'center', gap: 8,
             padding: '10px 20px', borderRadius: 10,
             fontFamily: 'Cabin', fontWeight: 700, fontSize: 14, color: 'white',
@@ -85,7 +85,7 @@ export default function Navbar() {
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
             <WindowsIcon size={15} />
-            Download Free
+            Download Free (.zip)
           </a>
 
           {/* Hamburger */}
@@ -111,7 +111,7 @@ export default function Navbar() {
             color: 'rgba(255,255,255,0.9)', background: 'none', border: 'none', cursor: 'pointer',
           }}>{link}</button>
         ))}
-        <a href="/ltspice-component-adder.exe" download onClick={() => setMobileOpen(false)} style={{
+        <a href="/ltspice-component-adder.zip" download onClick={() => setMobileOpen(false)} style={{
           display: 'flex', alignItems: 'center', gap: 10, marginTop: 16,
           padding: '14px 32px', borderRadius: 12,
           fontFamily: 'Cabin', fontWeight: 700, fontSize: 16, color: 'white',
@@ -119,7 +119,7 @@ export default function Navbar() {
           boxShadow: '0 6px 24px rgba(123,57,252,0.5)',
         }}>
           <WindowsIcon size={18} />
-          Download for Windows
+          Download for Windows (.zip)
         </a>
       </div>
 

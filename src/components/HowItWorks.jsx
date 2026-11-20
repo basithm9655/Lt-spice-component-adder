@@ -2,7 +2,7 @@ const steps = [
   {
     num: '01',
     title: 'Download & Launch',
-    desc: 'Download the free Windows EXE. No installation needed — just double-click and run.',
+    desc: 'Download the free ZIP package. Extract and double-click to run — clean and portable with no installation needed.',
     color: '#7b39fc',
     tag: 'Free & Portable',
   },

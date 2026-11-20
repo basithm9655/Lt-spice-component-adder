@@ -33,11 +33,18 @@ jobs:
           pyinstaller --name "ltspice-component-adder-by-Basi" --windowed --onefile --noconfirm --clean --icon=icon.ico --add-data "icon.ico;." --add-data "Lt-Spice-models-main;Lt-Spice-models-main" --collect-all customtkinter --hidden-import PIL --hidden-import PIL._imagingtk --hidden-import tkinter --hidden-import tkinter.ttk app.py
         shell: cmd
 
+      - name: Create Portable ZIP Archive
+        run: |
+          powershell Compress-Archive -Path "desktop-app/dist/ltspice-component-adder-by-Basi.exe" -DestinationPath "desktop-app/dist/ltspice-component-adder-v2.3.0.zip" -Force
+        shell: cmd
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ltspice-component-adder-windows-exe
-          path: desktop-app/dist/ltspice-component-adder-by-Basi.exe
+          path: |
+            desktop-app/dist/ltspice-component-adder-by-Basi.exe
+            desktop-app/dist/ltspice-component-adder-v2.3.0.zip
           if-no-files-found: error
 
       - name: Create or Update GitHub Release
@@ -53,6 +60,7 @@ jobs:
 
             ### 🚀 What's New in v2.3.0:
             - **🔄 GitHub In-App Auto-Updater**: The Windows app automatically checks GitHub Releases for new updates on launch in the background, or on demand via the **"Check for Updates"** button. If an update is detected, an interactive dialog allows 1-click download, verified streaming progress, and seamless self-replacement restart on Windows!
+            - **📦 Portable ZIP Package**: Available as a `.zip` archive to run cleanly without Windows Defender SmartScreen MOTW browser flags.
             - **⚡ 1-Click Instant Install**: Open the app and click **⚡ Add All (59)** to install and verify all 59 components into LTspice in seconds.
             - **59 Genuine SPICE Semiconductor Models** covering standard EDC, LIC, and Analog/Digital laboratory syllabus (Boylestad, Malvino, Floyd, Millman-Halkias, Neamen).
             - **Germanium Diodes**: 1N34A, OA79, OA91, 1N270, 1N60 with authentic knee ($V_f \approx 0.25\text{V}$, $E_g = 0.67\text{eV}$).
@@ -71,9 +79,11 @@ jobs:
             - **Native LTspice Database Sync**: Updates `standard.dio`, `standard.bjt`, `standard.jft`, `standard.mos`.
 
             ### 📥 Download
-            Download **`ltspice-component-adder-by-Basi.exe`** below, run it on Windows, and click **⚡ Add All (59)** to install everything with zero friction!
+            - **Recommended (No SmartScreen Warning)**: Download **`ltspice-component-adder-v2.3.0.zip`**, extract, and double-click to run!
+            - **Standalone Executable**: Download **`ltspice-component-adder-by-Basi.exe`** directly.
           files: |
             desktop-app/dist/ltspice-component-adder-by-Basi.exe
+            desktop-app/dist/ltspice-component-adder-v2.3.0.zip
           draft: false
           prerelease: false
         env:

@@ -5,7 +5,8 @@ const links = {
     { label: 'Features', href: '#features' },
     { label: 'Components', href: '#components' },
     { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Download', href: '/ltspice-component-adder.exe', download: true },
+    { label: 'Download (.zip)', href: '/ltspice-component-adder.zip', download: true },
+    { label: 'Direct .exe', href: '/ltspice-component-adder.exe', download: true },
   ],
   Community: [
     { label: 'Models Library', href: '#components' },
@@ -79,7 +80,7 @@ export default function Footer() {
           }}>
             Free, portable, no installation required. Just download and run.
           </p>
-          <a href="/ltspice-component-adder.exe" download className="dl-btn" style={{
+          <a href="/ltspice-component-adder.zip" download className="dl-btn" style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12,
             padding: '16px 32px', borderRadius: 12, textDecoration: 'none',
             background: '#7b39fc', color: 'white',
@@ -91,13 +92,13 @@ export default function Footer() {
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
             <WindowsIcon />
-            Download for Windows — Free
+            Download for Windows (.zip)
           </a>
           <p style={{
-            fontFamily: 'Inter', fontSize: 13, color: 'rgba(255,255,255,0.3)',
+            fontFamily: 'Inter', fontSize: 13, color: 'rgba(255,255,255,0.4)',
             marginTop: 16, margin: '16px auto 0'
           }}>
-            Windows 10/11 · Portable EXE · No install needed
+            Windows 10/11 · Portable ZIP package · No SmartScreen block · <a href="/ltspice-component-adder.exe" download style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'underline' }}>or direct .exe</a>
           </p>
         </div>
       </div>

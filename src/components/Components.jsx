@@ -345,7 +345,7 @@ export default function Components() {
             </p>
           </div>
           <a
-            href="/ltspice-component-adder.exe"
+            href="/ltspice-component-adder.zip"
             download
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 8,
@@ -358,7 +358,7 @@ export default function Components() {
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'scale(1.04)' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)' }}
           >
-            Download Free for Windows
+            Download Free (.zip)
           </a>
         </div>
 
