@@ -1,4 +1,9 @@
-# ⚡ LTspice Component Adder Pro — 100% Verified Engineering SPICE Models (v2.1.0)
+# ⚡ LTspice Component Adder Pro — 100% Verified Engineering SPICE Models (v2.3.0)
+
+- **Builder / Creator**: Basi
+- **GitHub Username**: basithm9655 (https://github.com/basithm9655)
+- **Official Repository**: https://github.com/basithm9655/Lt-spice-component-adder
+- **Live Tool**: https://lt-spice-component-adder.vercel.app/
 
 > **Release Status: 10/10 VERIFIED PASS**. Every single one of the **59 semiconductor and integrated circuit SPICE models** in this library has been audited, patched, and verified via LTspice 26.1.1 batch simulation. All 12 previously flagged models (LM386, TDA2030, 1N3716, 2N5460, 3N163, LM358, TL082, 2N5060, 2N6027, BT136, DB3, DFlipFlop) have been replaced with physically verified, converging transistor-level and native macromodel implementations.
 

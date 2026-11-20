@@ -2,13 +2,16 @@
 
 > A fast, lightweight, free desktop tool for Windows 10 & 11 that installs and verifies 59 essential semiconductor SPICE models, symbols (.asy), and subcircuits (.lib) into Analog Devices LTspice XVII & LTspice 24 in 1 click.
 
-- Website: https://lt-spice-component-adder.vercel.app/
-- Download (Portable ZIP): https://lt-spice-component-adder.vercel.app/ltspice-component-adder.zip
-- Download (Standalone EXE): https://lt-spice-component-adder.vercel.app/ltspice-component-adder.exe
-- GitHub Repository: https://github.com/basithm9655/Lt-spice-component-adder
-- Latest Release: https://github.com/basithm9655/Lt-spice-component-adder/releases/tag/v2.3.0
-- Author: Basi
-- Compatibility: Windows 10 & Windows 11 (64-bit and 32-bit), LTspice XVII, LTspice 24
+- **Builder / Creator**: Basi
+- **GitHub Username**: basithm9655
+- **GitHub Profile**: https://github.com/basithm9655
+- **Official Website**: https://lt-spice-component-adder.vercel.app/
+- **GitHub Repository**: https://github.com/basithm9655/Lt-spice-component-adder
+- **Latest Release (v2.3.0)**: https://github.com/basithm9655/Lt-spice-component-adder/releases/tag/v2.3.0
+- **Direct Downloads**:
+  - Portable ZIP: https://lt-spice-component-adder.vercel.app/ltspice-component-adder.zip
+  - Standalone EXE: https://lt-spice-component-adder.vercel.app/ltspice-component-adder.exe
+- **Compatibility**: Windows 10 & Windows 11 (64-bit and 32-bit), LTspice XVII, LTspice 24
 
 ---
 
