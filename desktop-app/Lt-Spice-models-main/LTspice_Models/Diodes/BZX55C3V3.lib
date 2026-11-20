@@ -1,3 +1,1 @@
-* BZX55C3V3 3.3V 500mW Zener Diode SPICE Model
-* Field-emission breakdown mechanism
-.model BZX55C3V3 D(Is=1e-11 Rs=15 Bv=3.3 Ibv=5m Nbv=1.5 Cjo=120p)
+.model BZX55C3V3 D(Is=1e-11 Rs=55 Bv=3.3 Ibv=5m Nbv=1.5 Tbv1=-0.48m Cjo=120p)

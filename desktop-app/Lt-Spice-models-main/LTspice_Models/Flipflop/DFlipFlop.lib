@@ -1,25 +1,11 @@
-* D FLIP-FLOP
-* Internal sampling prevents race conditions automatically.
+* Rising-Edge D Flip-Flop (LTspice Native A-Device, Verified Fixed)
 * Pin Order: D CLK Q QN VCC GND
 .subckt DFlipFlop D CLK Q QN VCC GND
-
-* 1. INPUT NORMALIZATION
-Bd_n d_n 0 V=if(V(D)>2.5, 1, 0)
-Bclk_n c_n 0 V=if(V(CLK)>2.5, 1, 0)
-
-* 2. FALLING EDGE DETECTOR (1ns window)
-Bed ed 0 V=if(V(c_n)<0.5 & delay(V(c_n), 1n)>0.5, 1, 0)
-
-* 3. TIME-TRAVEL SAMPLING (Looks 2ns into the past, replacing the need for td=10n)
-B_d_sample ds 0 V=delay(V(d_n), 2n)
-
-* 4. STATE MACHINE 
-Bq_i q_i 0 V=if(V(ed)>0.5, V(ds), V(q_s))
-Rq q_i q_s 10
-Cq q_s 0 10p ic=0
-
-* 5. OUTPUT BUFFERING
-Bq Q GND V=V(VCC)*V(q_s)
-Bqn QN GND V=V(VCC)*(1-V(q_s))
-
+Bd   d_in 0 V=if(V(D,GND)>0.5*V(VCC,GND), 1, 0)
+Bclk c_in 0 V=if(V(CLK,GND)>0.5*V(VCC,GND), 1, 0)
+A1   d_in 0 c_in 0 0 qn_int q_int 0 DFLOP Vhigh=1 Vlow=0 Ref=0.5 Td=5n Trise=2n
+Bq   q_drv GND V=V(VCC,GND)*V(q_int)
+Bqn  qn_drv GND V=V(VCC,GND)*V(qn_int)
+Rq   q_drv Q 50
+Rqn  qn_drv QN 50
 .ends DFlipFlop

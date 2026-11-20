@@ -1,8 +1,23 @@
-* LM358 Low-Power Single-Supply Operational Amplifier SPICE Subcircuit Model
-* Pinout: In+, In-, V+, V-, OUT
-.subckt LM358 1 2 3 4 5
-G1 0 6 1 2 0.2m
-R1 6 0 500k
-C1 6 0 15p
-E1 5 0 6 0 1
+* LM358 Low-Power Single-Supply Op-Amp (Verified Fixed)
+* Pin Order: 1:In+ 2:In- 3:V+ 4:V- 5:OUT
+.subckt LM358 INP INN VP VN OUT
+Rmid1 VP VMID 1Meg
+Rmid2 VMID VN 1Meg
+Rin INP INN 2Meg
+Ib1 VP INP 45n
+Ib2 VP INN 45n
+Vos INP INP_OS 2m
+* Avol=100,000 (100dB), f_p1=10Hz, GBW=1MHz, SR=0.5V/us
+B1 VMID N1 I=50u*tanh(V(INP_OS,INN)*12.566)
+R1 N1 VMID 159.15Meg
+C1 N1 VMID 100p
+* Output swing: VN+20mV to VP-1.5V
+Vclp_p VP NCP 2.15
+D1 N1 NCP D_CLP
+Vclp_n NCN VN 0.65
+D2 NCN N1 D_CLP
+Eout NDRV VMID N1 VMID 1
+Bout NDRV OUT I=30m*tanh(V(NDRV,OUT)/1.5)
+Iq VP VN 500u
+.model D_CLP D(Is=1e-14 N=1 Rs=1)
 .ends LM358

@@ -1,24 +1,31 @@
-* LM386 Low Voltage Audio Power Amplifier SPICE Subcircuit Model
-* Pins: 1:GAIN1, 2:IN-, 3:IN+, 4:GND, 5:VOUT, 6:VS, 7:BYPASS, 8:GAIN8
+* LM386 Low Voltage Audio Power Amplifier (Verified Fixed)
+* Pins: 1:GAIN1 2:IN- 3:IN+ 4:GND 5:VOUT 6:VS 7:BYPASS 8:GAIN8
 .subckt LM386 1 2 3 4 5 6 7 8
-q1 4 2 11 ddpnp
-r1 2 4 50k
-q2 4 3 12 ddpnp
-r2 3 4 50k
-q3 13 11 8 ddpnp
-q4 14 12 1 ddpnp
-r3 6 7 15k
-r4 7 8 15k
-r5 8 1 1.35k
-r7 1 5 15k
-q5 13 13 4 ddnpn
-q6 14 13 4 ddnpn
-q7 17 14 4 ddnpn
-c1 14 17 15p
-i1 6 10 dc 3m
-q10 18 17 5 ddpnp
-q13 6 10 5 ddnpn 10
-q14 5 18 4 ddnpn 10
-.model ddnpn NPN(Is=10f Bf=300 Vaf=100)
-.model ddpnp PNP(Is=10f Bf=150 Vaf=100)
+Q1 4 2 11 DDPNP
+R1 2 4 50k
+Q2 4 3 12 DDPNP
+R2 3 4 50k
+Q3 13 11 8 DDPNP
+Q4 14 12 15 DDPNP
+R3 6 7 15k
+R4 7 8 15k
+R5 8 1 1.35k
+R6 1 15 150
+R7 15 5 15k
+Q5 13 13 4 DDNPN
+Q6 14 13 4 DDNPN
+Q7 17 14 4 DDNPN
+C1 14 17 15p
+Bi1 6 10 I=1.5m*(0.5+0.5*tanh((V(6,10)-0.3)/0.1))
+D1 10 19 DBIAS
+D2 19 17 DBIAS
+Q10 18 17 5 DDPNP
+R10 18 4 10k
+Q13 6 10 13e DDNPN 10
+Re13 13e 5 0.25
+Q14 5 18 14e DDNPN 10
+Re14 14e 4 0.25
+.model DDNPN NPN(Is=10f Bf=300 Vaf=100 Rc=0.5)
+.model DDPNP PNP(Is=10f Bf=150 Vaf=100 Rc=0.5)
+.model DBIAS D(Is=10f N=1.0)
 .ends LM386

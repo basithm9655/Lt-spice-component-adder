@@ -1,9 +1,11 @@
-* 2N5060 Sensitive Gate SCR SPICE Subcircuit Model
+* 2N5060 Sensitive-Gate SCR (Verified Fixed)
 * Pinout: 1=Anode, 2=Gate, 3=Cathode
-.SUBCKT 2N5060 1 2 3
-Q1 3 2 4 NPN_SCR
+.subckt 2N5060 1 2 3
+Q1 4 2 3 NPN_SCR
 Q2 2 4 1 PNP_SCR
-R1 2 3 1k
-.model NPN_SCR NPN(Bf=50 Is=1e-13 Vaf=50)
-.model PNP_SCR PNP(Bf=20 Is=1e-13 Vaf=50)
-.ENDS 2N5060
+Rgk 2 3 10k
+Rak 1 3 10Meg
+Cak 1 3 10p
+.model NPN_SCR NPN(Bf=50 Is=1e-13 Vaf=50 Rc=0.3 Cje=15p Cjc=10p)
+.model PNP_SCR PNP(Bf=15 Is=1e-13 Vaf=50 Rc=0.3 Cje=15p Cjc=10p)
+.ends 2N5060

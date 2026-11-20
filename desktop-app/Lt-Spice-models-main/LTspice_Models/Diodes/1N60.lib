@@ -1,3 +1,1 @@
-* 1N60 Germanium Point-Contact Diode SPICE Model
-* Widely used in FM/AM detectors, audio clipping pedals, and lab practicals
-.model 1N60 D(Is=1.38u Rs=50 N=2.0 Cjo=1.75p Eg=0.67 Bv=40 Ibv=100u Tt=100n type=Germanium mfg=General_Instrument)
+.model 1N60 D(Is=3.5u Rs=12 N=1.55 Cjo=1.0p Eg=0.67 Bv=45 Ibv=100u Tt=100n type=Germanium mfg=General_Instrument)

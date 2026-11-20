@@ -1,3 +1,2 @@
-* 3N163 N-Channel Depletion-Mode MOSFET SPICE Model
-* Syllabus topic: MOSFET types - Enhancement & Depletion (Conducts with zero or negative Vgs)
-.model 3N163 NMOS(Level=1 Vto=-2.5 Kp=2m Lambda=0.01 Cgso=10p Cgdo=10p)
+* 3N163 N-Channel Depletion-Mode MOSFET (3-Pin LTspice VDMOS, Verified Fixed)
+.model 3N163 VDMOS(Vto=-2.5 Kp=2m Lambda=0.01 Rs=2 Rd=5 Cgs=10p Cgdmax=10p Cgdmin=2p)

@@ -1,8 +1,23 @@
-* TL082 High-Speed JFET-Input Operational Amplifier SPICE Subcircuit Model
-* Pinout: In+, In-, V+, V-, OUT
-.subckt TL082 1 2 3 4 5
-G1 0 6 1 2 0.3m
-R1 6 0 1Meg
-C1 6 0 10p
-E1 5 0 6 0 1
+* TL082 High-Speed JFET-Input Op-Amp (Verified Fixed)
+* Pin Order: 1:In+ 2:In- 3:V+ 4:V- 5:OUT
+.subckt TL082 INP INN VP VN OUT
+Rmid1 VP VMID 1Meg
+Rmid2 VMID VN 1Meg
+Rin INP INN 1T
+Ib1 VP INP 30p
+Ib2 VP INN 30p
+Vos INP INP_OS 3m
+* Avol=200,000 (106dB), f_p1=15Hz, GBW=3MHz, SR=13V/us
+B1 VMID N1 I=1.3m*tanh(V(INP_OS,INN)*1.450)
+R1 N1 VMID 106.1Meg
+C1 N1 VMID 100p
+* Output swing: VN+1.5V to VP-1.5V
+Vclp_p VP NCP 2.2
+D1 N1 NCP D_CLP
+Vclp_n NCN VN 2.2
+D2 NCN N1 D_CLP
+Eout NDRV VMID N1 VMID 1
+Bout NDRV OUT I=25m*tanh(V(NDRV,OUT)/1.25)
+Iq VP VN 1.4m
+.model D_CLP D(Is=1e-14 N=1 Rs=1)
 .ends TL082

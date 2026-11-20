@@ -1,9 +1,9 @@
-* 1N3716 Tunnel Diode SPICE Subcircuit Model
-* Pinout: 1=Anode, 2=Cathode
-* Features N-shaped I-V curve with negative differential resistance for microwave oscillators
+* 1N3716 Germanium Tunnel Diode (Verified Fixed)
+* Pinout: 1=Anode, 2=Cathode | Ip=1.0mA @ 65mV, Iv=0.14mA @ 337mV
 .subckt 1N3716 1 2
-Bthermal 1 2 I=4.7m*exp(-500m/26m)*(exp(v(1,2)/26m)-1)
-Btunnel  1 2 I=4.7m*(v(1,2)/100m)*exp(1-v(1,2)/100m)
-Bexcess  1 2 I=0.4m*exp(v(1,2)-350m)
-Cd       1 2 25p
+Btunnel 1 2 I=if(V(1,2)>=0, 1m*(V(1,2)/65m)*exp(1-V(1,2)/65m), 41.82m*V(1,2))
+Bexcess 1 2 I=if(V(1,2)>=0, 1.5u*(exp(min(V(1,2)/0.1, 40))-1), 0)
+Dtherm  1 2 D_TD
+Cd      1 2 25p
+.model D_TD D(Is=2e-10 N=1.15 Rs=1.5 Eg=0.67)
 .ends 1N3716

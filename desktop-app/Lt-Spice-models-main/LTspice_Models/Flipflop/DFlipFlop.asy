@@ -6,7 +6,7 @@ WINDOW 3 0 56 Top 2
 SYMATTR Prefix X
 SYMATTR Value DFlipFlop
 SYMATTR ModelFile DFlipFlop.lib
-SYMATTR Description D-Type Flip-Flop with Clock, Set, Reset
+SYMATTR Description D-Type Flip-Flop with Complementary Outputs
 PIN -64 -48 LEFT 8
 PINATTR PinName D
 PINATTR SpiceOrder 1

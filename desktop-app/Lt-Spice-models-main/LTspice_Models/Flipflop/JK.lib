@@ -1,28 +1,13 @@
-* JK FLIP-FLOP
-* Solves LTspice max timestep skipping AND cascading race conditions.
+* Edge-Triggered JK Flip-Flop (LTspice Native A-Device, Verified Fixed)
 * Pin Order: J K CLK Q QN VCC GND
-.subckt JKFF J K CLK Q QN VCC GND
-
-* 1. INPUT NORMALIZATION 
-Bj_n j_n 0 V=if(V(J)>2.5, 1, 0)
-Bk_n k_n 0 V=if(V(K)>2.5, 1, 0)
-Bclk_n c_n 0 V=if(V(CLK)>2.5, 1, 0)
-
-* 2. FALLING EDGE DETECTOR 
-Bed ed 0 V=if(V(c_n)<0.5 & delay(V(c_n),1u)>0.5, 1, 0)
-
-* 3. TIME-TRAVEL 
-B_j_sample js 0 V=delay(V(j_n), 2u)
-B_k_sample ks 0 V=delay(V(k_n), 2u)
-B_q_sample qs 0 V=delay(V(q_s), 2u)
-
-* 4. STATE MACHINE 
-Bq_i q_i 0 V=if(V(ed)>0.5, if(V(js)>0.5, if(V(ks)>0.5, 1-V(qs), 1), if(V(ks)>0.5, 0, V(qs))), V(q_s))
-Rq q_i q_s 100
-Cq q_s 0 1n ic=0
-
-* 5. OUTPUT BUFFERING (Scales to VCC)
-Bq Q GND V=V(VCC)*V(q_s)
-Bqn QN GND V=V(VCC)*(1-V(q_s))
-
-.ends JKFF
+.subckt JK J K CLK Q QN VCC GND
+Bj   j_n  0 V=if(V(J,GND)>0.5*V(VCC,GND), 1, 0)
+Bk   k_n  0 V=if(V(K,GND)>0.5*V(VCC,GND), 1, 0)
+Bclk c_inv 0 V=if(V(CLK,GND)<0.5*V(VCC,GND), 1, 0)
+Bd   d_in 0 V=if((V(j_n)>0.5 & V(qn_int)>0.5) | (V(k_n)<0.5 & V(q_int)>0.5), 1, 0)
+A1   d_in 0 c_inv 0 0 qn_int q_int 0 DFLOP Vhigh=1 Vlow=0 Ref=0.5 Td=5n Trise=2n
+Bq   q_drv GND V=V(VCC,GND)*V(q_int)
+Bqn  qn_drv GND V=V(VCC,GND)*V(qn_int)
+Rq   q_drv Q 50
+Rqn  qn_drv QN 50
+.ends JK

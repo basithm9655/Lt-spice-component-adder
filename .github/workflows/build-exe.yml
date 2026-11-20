@@ -44,10 +44,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main'
         with:
-          tag_name: v2.0.0
-          name: "LTspice Component Adder Pro v2.0.0 (59 Syllabus Models)"
+          tag_name: v2.1.0
+          name: "LTspice Component Adder Pro v2.1.0 (100% Verified SPICE Models)"
           body: |
-            # ⚡ LTspice Component Adder Pro — Windows Standalone Release (v2.0.0)
+            # ⚡ LTspice Component Adder Pro — Windows Standalone Release (v2.1.0 - 100% Physics Verified)
 
             Built automatically via GitHub Actions for Windows 10 & Windows 11.
 

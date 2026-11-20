@@ -1,3 +1,1 @@
-* OA91 Gold-Bonded Germanium Diode SPICE Model
-* Standard textbook diode in Boylestad / Floyd / Millman-Halkias
-.model OA91 D(Is=19.43u N=2.986 Rs=65.98 Ikf=0 Xti=3 Eg=0.67 Cjo=1.33p M=.3333 Vj=.75 Fc=.5 Bv=100 Ibv=100u Tt=5n type=Germanium mfg=Mullard)
+.model OA91 D(Is=2.6u Rs=3.5 N=1.60 Cjo=0.7p Eg=0.67 Bv=115 Ibv=100u Tt=5n type=Germanium mfg=Mullard)

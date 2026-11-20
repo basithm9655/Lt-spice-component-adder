@@ -14,7 +14,7 @@ WINDOW 3 56 72 Left 2
 SYMATTR Value BFW11
 SYMATTR Prefix J
 SYMATTR ModelFile BFW11.lib
-SYMATTR Description N-Channel JFET (Vp~ -2.1V, Idss=10mA)
+SYMATTR Description N-Channel JFET (Vp~ -2.1V, Idss=7mA)
 PIN 48 0 NONE 0
 PINATTR PinName D
 PINATTR SpiceOrder 1

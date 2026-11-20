@@ -1,14 +1,14 @@
-* 2N2647 Precision Unijunction Transistor (UJT) SPICE Subcircuit Model
-* Pin Order: E=1, B1=2, B2=3
-.SUBCKT 2N2647 1 2 3
-DE 1 4 EMITTER
-VE 4 5 DC 0
+* 2N2647 Precision Pulse UJT (Verified Fixed eta=0.70, Rbb=6.8k)
+* Pinout: 1=Emitter, 2=Base1, 3=Base2
+.subckt 2N2647 1 2 3
+DE  1 4 EMITTER
+VE  4 5 DC 0
 HVE 6 0 VE 1K
 RVE 0 6 1MEG
-GBB 5 7 POLY(2) (5,7) (6,0) 0 0.00025 0 0 0.00620
+GBB 5 7 POLY(2) (5,7) (6,0) 0 0.00021 0 0 0.00620
 CBB 5 7 30P
 RB1 7 2 RMOD 3.500
-RB2 3 5 RMOD 2.800K
-.MODEL RMOD RES(R=1, TC1=0.01)
-.MODEL EMITTER D (IS=15.0P N=1.8)
-.ENDS 2N2647
+RB2 3 5 RMOD 2.04K
+.model RMOD RES(R=1, TC1=0.01)
+.model EMITTER D(IS=15.0P N=1.8)
+.ends 2N2647

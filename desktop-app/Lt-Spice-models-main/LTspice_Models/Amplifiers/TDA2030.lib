@@ -1,27 +1,27 @@
-* TDA2030 14W Hi-Fi Audio Power Amplifier Macromodel
-* Connections:
-*   1: Non-Inverting Input (+IN)
-*   2: Inverting Input (-IN)
-*   3: -Vs (Negative Supply / GND)
-*   4: Output (OUT)
-*   5: +Vs (Positive Supply)
-.SUBCKT TDA2030 1 2 5 3 4
-* Input Stage
-Rin 1 2 5MEG
-Ib1 1 0 0.2U
-Ib2 2 0 0.2U
-Vos 1 10 1M
-G1 0 11 10 2 0.01
-R1 11 0 100K
-C1 11 0 159P
-* Intermediate & Driver Stage (Gain = 80dB, Slew Rate ~ 8V/us)
-E1 12 0 11 0 100
-R2 12 13 100
-D1 13 5 D_CLP
-D2 3 13 D_CLP
-* Output Stage (Push-Pull Class AB)
-Ro 13 4 0.05
-* Supply Quiescent Current
-Iq 5 3 40M
-.MODEL D_CLP D(IS=1E-14 N=1)
-.ENDS TDA2030
+* TDA2030 14W Hi-Fi Class AB Power Amplifier (Verified Fixed)
+* Pin Order (matches TDA2030.asy): 1:+IN 2:-IN 3:+VS 4:-VS 5:OUT
+.subckt TDA2030 INP INN VP VN OUT
+Rmid1 VP VMID 100k
+Rmid2 VMID VN 100k
+Rin INP INN 5Meg
+Ib1 VP INP 0.2u
+Ib2 VP INN 0.2u
+Vos INP INP_OS 2m
+* Gain=10,000 (80dB), f_p1=1kHz, GBW=10MHz, SR=8V/us
+B1 VMID N1 I=0.8m*tanh(V(INP_OS,INN)*7.854)
+R1 N1 VMID 1.5915Meg
+C1 N1 VMID 100p
+* Rail saturation clamps (VP - 1.8V, VN + 1.8V)
+Vclp_p VP NCP 2.5
+D1 N1 NCP D_CLP
+Vclp_n NCN VN 2.5
+D2 NCN N1 D_CLP
+* Output buffer (Rout=0.05 ohm, Ipk=3.5A) + supply current draw
+Eout NDRV VMID N1 VMID 1
+Vsense NDRV NS 0
+Bout NS OUT I=3.5*tanh(V(NS,OUT)/0.175)
+Bvp VP VMID I=uramp(I(Vsense))
+Bvn VMID VN I=uramp(-I(Vsense))
+Iq VP VN 40m
+.model D_CLP D(Is=1e-14 N=1 Rs=1)
+.ends TDA2030

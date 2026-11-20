@@ -106,49 +106,49 @@ EXT_MAP = {
 # ── Standard Component Database Definitions (for native right-click picker) ───
 STANDARD_MODELS = {
     "standard.dio": [
-        ".model 1N34A D(Is=2.6u Rs=6.5 N=1.6 Cjo=0.8p Eg=0.67 Bv=75 Ibv=1m mfg=Germanium type=Germanium)",
-        ".model OA79 D(Is=12.5u Rs=40 N=2.2 Cjo=1p Eg=0.67 Bv=45 Ibv=100u mfg=Germanium type=Germanium)",
-        ".model OA91 D(Is=19.43u N=2.986 Rs=65.98 Ikf=0 Xti=3 Eg=0.67 Cjo=1.33p M=.3333 Vj=.75 Fc=.5 Bv=100 Ibv=100u Tt=5n mfg=Germanium type=Germanium)",
-        ".model 1N270 D(Is=1.24u Rs=2.42 N=1.675 Cjo=4.0p Eg=0.67 Bv=100 Ibv=1m Tt=21n mfg=Germanium type=Germanium)",
-        ".model 1N60 D(Is=1.38u Rs=50 N=2.0 Cjo=1.75p Eg=0.67 Bv=40 Ibv=100u Tt=100n mfg=Germanium type=Germanium)",
+        ".model 1N34A D(Is=2.6u Rs=6.5 N=1.6 Cjo=0.8p Eg=0.67 Bv=75 Ibv=1m type=Germanium mfg=General_Instrument)",
+        ".model OA79 D(Is=12.5u Rs=40 N=2.2 Cjo=1p Eg=0.67 Bv=45 Ibv=100u type=Germanium mfg=Mullard)",
+        ".model OA91 D(Is=2.6u Rs=3.5 N=1.60 Cjo=0.7p Eg=0.67 Bv=115 Ibv=100u Tt=5n type=Germanium mfg=Mullard)",
+        ".model 1N270 D(Is=1.24u Rs=2.42 N=1.675 Cjo=4.0p Eg=0.67 Bv=100 Ibv=1m Tt=21n type=Germanium mfg=Microsemi)",
+        ".model 1N60 D(Is=3.5u Rs=12 N=1.55 Cjo=1.0p Eg=0.67 Bv=45 Ibv=100u Tt=100n type=Germanium mfg=General_Instrument)",
         ".model IDEAL_DIODE D(Ron=1m Roff=100Meg Vfwd=0.0 Vrev=1000 mfg=Academic type=Ideal)",
         ".model BB105 D(Is=1e-14 Rs=0.5 Cjo=18p Vj=2.0 M=1.05 Bv=30 Ibv=10u mfg=Philips type=Varactor)",
         ".model BAR64 D(Is=1.5e-14 Rs=0.85 N=1.05 Tt=1.5u Cjo=0.23p Vj=0.7 Bv=150 Ibv=10u mfg=Infineon type=PIN)",
-        ".model BZX55C3V3 D(Is=1e-11 Rs=15 Bv=3.3 Ibv=5m Nbv=1.5 Cjo=120p mfg=Vishay type=Zener)",
-        ".model BZX55C5V1 D(Is=1e-12 Rs=10 Bv=5.1 Ibv=5m Nbv=1.2 Cjo=80p mfg=Vishay type=Zener)",
-        ".model BZX55C6V2 D(Is=1e-13 Rs=6 Bv=6.2 Ibv=5m Nbv=1.1 Cjo=60p mfg=Vishay type=Zener)",
-        ".model BZX55C9V1 D(Is=1e-14 Rs=8 Bv=9.1 Ibv=5m Nbv=1.1 Cjo=40p mfg=Vishay type=Zener)",
+        ".model BZX55C3V3 D(Is=1e-11 Rs=55 Bv=3.3 Ibv=5m Nbv=1.5 Tbv1=-0.48m Cjo=120p mfg=Vishay type=Zener)",
+        ".model BZX55C5V1 D(Is=1e-12 Rs=10 Bv=5.1 Ibv=5m Nbv=1.2 Tbv1=0.0 Cjo=80p mfg=Vishay type=Zener)",
+        ".model BZX55C6V2 D(Is=1e-13 Rs=6  Bv=6.2 Ibv=5m Nbv=1.1 Tbv1=0.32m Cjo=60p mfg=Vishay type=Zener)",
+        ".model BZX55C9V1 D(Is=1e-14 Rs=8  Bv=9.1 Ibv=5m Nbv=1.1 Tbv1=0.49m Cjo=40p mfg=Vishay type=Zener)",
         ".model LED_RED D(Is=1e-18 Rs=2.5 N=1.8 Cjo=15p Eg=1.9 Vpk=5 Iave=30m mfg=Generic type=LED)",
         ".model LED_GREEN D(Is=1e-19 Rs=3.0 N=2.0 Cjo=15p Eg=2.2 Vpk=5 Iave=30m mfg=Generic type=LED)",
         ".model LED_BLUE D(Is=1e-22 Rs=5.0 N=2.5 Cjo=20p Eg=3.2 Vpk=5 Iave=30m mfg=Generic type=LED)",
     ],
     "standard.bjt": [
-        ".model SL100 NPN(Is=1.5e-13 Bf=150 Vaf=100 Ikf=0.5 Xtb=1.5 Cje=25p Cjc=12p Tf=0.4n Tr=15n Rb=5 Rc=0.4 Re=0.1 mfg=CDIL)",
-        ".model SK100 PNP(Is=1.5e-13 Bf=150 Vaf=100 Ikf=0.5 Xtb=1.5 Cje=25p Cjc=12p Tf=0.4n Tr=15n Rb=5 Rc=0.4 Re=0.1 mfg=CDIL)",
+        ".model SL100 NPN(Is=1.5e-13 Bf=150 Vaf=100 Ikf=0.5 Xtb=1.5 Cje=25p Cjc=12p Tf=1.6n Tr=15n Rb=5 Rc=0.4 Re=0.1 mfg=CDIL)",
+        ".model SK100 PNP(Is=1.5e-13 Bf=150 Vaf=100 Ikf=0.5 Xtb=1.5 Cje=25p Cjc=12p Tf=1.6n Tr=15n Rb=5 Rc=0.4 Re=0.1 mfg=CDIL)",
         ".model BC547 NPN(Is=7.04e-14 Bf=300 Vaf=90.7 Ikf=0.12 Xtb=1.5 Cje=11.5p Cjc=4.5p Tf=0.45n Tr=20n mfg=Philips)",
         ".model BC548 NPN(Is=7.04e-14 Bf=250 Vaf=80 Ikf=0.12 Xtb=1.5 Cje=11.5p Cjc=4.5p Tf=0.45n Tr=20n mfg=Philips)",
         ".model BC557 PNP(Is=1.02e-13 Bf=300 Vaf=75.6 Ikf=0.1 Xtb=1.5 Cje=12p Cjc=6p Tf=0.5n Tr=20n mfg=Philips)",
         ".model BC558 PNP(Is=1.02e-13 Bf=250 Vaf=70 Ikf=0.1 Xtb=1.5 Cje=12p Cjc=6p Tf=0.5n Tr=20n mfg=Philips)",
         ".model BD139 NPN(Is=2.3e-13 Bf=160 Vaf=120 Ikf=1.5 Xtb=1.5 Cje=60p Cjc=25p Tf=0.8n Tr=30n Rc=0.2 Rb=2 mfg=ST)",
         ".model BD140 PNP(Is=2.3e-13 Bf=160 Vaf=120 Ikf=1.5 Xtb=1.5 Cje=60p Cjc=30p Tf=0.8n Tr=30n Rc=0.2 Rb=2 mfg=ST)",
-        ".model TIP31C NPN(Is=1.2e-11 Bf=80 Vaf=100 Ikf=3.0 Xtb=1.5 Cje=150p Cjc=80p Tf=1.2n Rc=0.1 Rb=1 mfg=OnSemi)",
-        ".model TIP32C PNP(Is=1.2e-11 Bf=80 Vaf=100 Ikf=3.0 Xtb=1.5 Cje=150p Cjc=90p Tf=1.2n Rc=0.1 Rb=1 mfg=OnSemi)",
-        ".model 2N3055 NPN(Is=2.5e-11 Bf=60 Vaf=70 Ikf=8.0 Xtb=1.5 Cje=400p Cjc=200p Tf=2n Rc=0.05 Rb=0.5 mfg=Motorola)",
-        ".model MJ2955 PNP(Is=2.5e-11 Bf=60 Vaf=70 Ikf=8.0 Xtb=1.5 Cje=400p Cjc=220p Tf=2n Rc=0.05 Rb=0.5 mfg=Motorola)",
+        ".model TIP31C NPN(Is=1.2e-11 Bf=80 Vaf=100 Ikf=3.0 Xtb=1.5 Cje=150p Cjc=80p Tf=53n Tr=400n Rc=0.1 Rb=1 mfg=OnSemi)",
+        ".model TIP32C PNP(Is=1.2e-11 Bf=80 Vaf=100 Ikf=3.0 Xtb=1.5 Cje=150p Cjc=90p Tf=53n Tr=400n Rc=0.1 Rb=1 mfg=OnSemi)",
+        ".model 2N3055 NPN(Is=2.5e-11 Bf=60 Vaf=70 Ikf=8.0 Xtb=1.5 Cje=400p Cjc=200p Tf=64n Tr=500n Rc=0.05 Rb=0.5 mfg=Motorola)",
+        ".model MJ2955 PNP(Is=2.5e-11 Bf=60 Vaf=70 Ikf=8.0 Xtb=1.5 Cje=400p Cjc=220p Tf=64n Tr=500n Rc=0.05 Rb=0.5 mfg=Motorola)",
     ],
     "standard.jft": [
-        ".model BFW10 NJF(Vto=-2.3 Beta=1.1m Lambda=23m Rd=7.8 Rs=7.8 Cgs=2p Cgd=2.2p Pb=0.99 Is=0.26f mfg=Philips)",
-        ".model BFW11 NJF(Vto=-2.1 Beta=1.2m Lambda=25m Rd=17 Rs=17 Cgs=2.3p Cgd=2.3p Pb=0.93 Is=0.22f mfg=Philips)",
+        ".model BFW10 NJF(Vto=-2.3 Beta=2.03m Lambda=23m Rd=7.8 Rs=7.8 Cgs=2p Cgd=2.2p Pb=0.99 Is=0.26f mfg=Philips)",
+        ".model BFW11 NJF(Vto=-2.1 Beta=1.6m Lambda=25m Rd=17 Rs=17 Cgs=2.3p Cgd=2.3p Pb=0.93 Is=0.22f mfg=Philips)",
         ".model 2N3819 NJF(Vto=-3.0 Beta=1.3m Lambda=20m Rd=12 Rs=12 Cgs=2.5p Cgd=2.5p Is=1e-14 mfg=Fairchild)",
         ".model 2N5457 NJF(Vto=-2.0 Beta=0.9m Lambda=15m Rd=15 Rs=15 Cgs=3p Cgd=3p Is=1e-14 mfg=OnSemi)",
-        ".model 2N5460 PJF(Vto=2.5 Beta=0.8m Lambda=15m Rd=25 Rs=25 Cgs=3p Cgd=3p Is=1e-14 mfg=OnSemi)",
+        ".model 2N5460 PJF(Vto=-2.5 Beta=0.8m Lambda=15m Rd=25 Rs=25 Cgs=3p Cgd=3p Is=1e-14 mfg=OnSemi)",
     ],
     "standard.mos": [
         ".model 2N7000 VDMOS(Vto=2.1 Kp=0.25 Rs=0.5 Rd=1.5 Cgs=35p Cgdmax=20p Cgdmin=5p mfg=OnSemi)",
         ".model BS170 VDMOS(Vto=2.0 Kp=0.30 Rs=0.4 Rd=1.2 Cgs=40p Cgdmax=25p Cgdmin=6p mfg=OnSemi)",
         ".model IRF540N VDMOS(Vto=4.0 Kp=15 Rs=12m Rd=20m Cgs=1.5n Cgdmax=600p Cgdmin=50p mfg=IR)",
         ".model IRF9540N VDMOS(pchan Vto=-4.0 Kp=10 Rs=25m Rd=50m Cgs=1.4n Cgdmax=700p Cgdmin=80p mfg=IR)",
-        ".model 3N163 NMOS(Level=1 Vto=-2.5 Kp=2m Lambda=0.01 Cgso=10p Cgdo=10p mfg=Siliconix)",
+        ".model 3N163 VDMOS(Vto=-2.5 Kp=2m Lambda=0.01 Rs=2 Rd=5 Cgs=10p Cgdmax=10p Cgdmin=2p mfg=Siliconix)",
     ]
 }
 
@@ -256,18 +256,29 @@ def scan_categories(bundled_only=False):
 
     return result
 
+def is_ltspice_running():
+    try:
+        import subprocess
+        out = subprocess.run(["tasklist"], capture_output=True, text=True, creationflags=0x08000000).stdout.lower()
+        return any(proc in out for proc in ("ltspice.exe", "xviix64.exe", "xviix86.exe"))
+    except Exception:
+        return False
+
 def sync_standard_cmp_databases(ltspice_root, log_list=None):
     """
-    Safely integrates discrete models into standard.dio, standard.bjt, standard.jft, standard.mos
+    Safely upserts discrete models into standard.dio, standard.bjt, standard.jft, standard.mos
     so that they appear in the native LTspice right-click component selector.
-    Detects Latin-1 vs UTF-16LE encoding automatically.
+    Automatically detects UTF-16LE, UTF-8, and Latin-1 encodings and creates .bak backups.
     """
     if not ltspice_root or not os.path.isdir(ltspice_root):
         return 0, []
 
     cmp_dir = os.path.join(ltspice_root, "lib", "cmp")
     if not os.path.isdir(cmp_dir):
-        return 0, []
+        if os.path.isdir(os.path.join(ltspice_root, "cmp")):
+            cmp_dir = os.path.join(ltspice_root, "cmp")
+        else:
+            return 0, []
 
     synced_count = 0
     synced_logs = []
@@ -277,7 +288,6 @@ def sync_standard_cmp_databases(ltspice_root, log_list=None):
         if not os.path.exists(file_path):
             continue
 
-        # Create safe backup on first modification
         bak_path = file_path + ".bak"
         if not os.path.exists(bak_path):
             try:
@@ -287,26 +297,48 @@ def sync_standard_cmp_databases(ltspice_root, log_list=None):
 
         try:
             with open(file_path, "rb") as bf:
-                header = bf.read(100)
-            enc = "utf-16le" if b"\x00" in header else "latin-1"
+                raw_bytes = bf.read(200)
+            if raw_bytes.startswith(b"\xff\xfe"):
+                enc = "utf-16le"
+            elif raw_bytes.startswith(b"\xfe\xff"):
+                enc = "utf-16be"
+            elif raw_bytes.startswith(b"\xef\xbb\xbf"):
+                enc = "utf-8-sig"
+            elif b"\x00" in raw_bytes:
+                enc = "utf-16le"
+            else:
+                try:
+                    with open(file_path, "r", encoding="utf-8") as tf:
+                        tf.read()
+                    enc = "utf-8"
+                except Exception:
+                    enc = "latin-1"
 
             with open(file_path, "r", encoding=enc, errors="ignore") as rf:
-                content = rf.read()
+                content_lines = rf.read().splitlines()
 
-            missing_lines = []
-            import re
-            for line in lines:
-                parts = line.split()
+            updated_count = 0
+            for model_line in lines:
+                parts = model_line.strip().split()
                 if len(parts) >= 2:
                     model_name = parts[1]
-                    if not re.search(r"\.model\s+" + re.escape(model_name) + r"[\s(]", content, re.IGNORECASE):
-                        missing_lines.append(line)
+                    pat = re.compile(rf"^\s*\.model\s+{re.escape(model_name)}\s+", re.IGNORECASE)
+                    replaced = False
+                    for idx, existing_line in enumerate(content_lines):
+                        if pat.match(existing_line):
+                            content_lines[idx] = model_line.strip()
+                            replaced = True
+                            updated_count += 1
+                            break
+                    if not replaced:
+                        content_lines.append(model_line.strip())
+                        updated_count += 1
 
-            if missing_lines:
-                with open(file_path, "a", encoding=enc) as wf:
-                    wf.write("\n" + "\n".join(missing_lines) + "\n")
-                synced_count += len(missing_lines)
-                msg = f"✔ SYNC: {len(missing_lines)} models integrated into lib\\cmp\\{filename}"
+            if updated_count > 0:
+                with open(file_path, "w", encoding=enc, newline="\n") as wf:
+                    wf.write("\n".join(content_lines) + "\n")
+                synced_count += updated_count
+                msg = f"✔ SYNC: {updated_count} models updated/added in lib\\cmp\\{filename}"
                 synced_logs.append(msg)
                 if log_list is not None:
                     log_list.append(msg)
