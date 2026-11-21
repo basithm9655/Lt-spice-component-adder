@@ -1,4 +1,4 @@
-# ⚡ LTspice Component Adder Pro — 100% Verified Engineering SPICE Models (v2.3.0)
+# ⚡ LTspice Component Adder Pro — 100% Verified Engineering SPICE Models (v2.3.1)
 
 - **Builder / Creator**: Basi
 - **GitHub Username**: basithm9655 (https://github.com/basithm9655)

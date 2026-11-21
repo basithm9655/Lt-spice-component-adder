@@ -35,7 +35,7 @@ jobs:
 
       - name: Create Portable ZIP Archive
         run: |
-          powershell Compress-Archive -Path "desktop-app/dist/ltspice-component-adder-by-Basi.exe" -DestinationPath "desktop-app/dist/ltspice-component-adder-v2.3.0.zip" -Force
+          powershell Compress-Archive -Path "desktop-app/dist/ltspice-component-adder-by-Basi.exe" -DestinationPath "desktop-app/dist/ltspice-component-adder-v2.3.1.zip" -Force
         shell: cmd
 
       - name: Upload Artifact
@@ -44,21 +44,26 @@ jobs:
           name: ltspice-component-adder-windows-exe
           path: |
             desktop-app/dist/ltspice-component-adder-by-Basi.exe
-            desktop-app/dist/ltspice-component-adder-v2.3.0.zip
+            desktop-app/dist/ltspice-component-adder-v2.3.1.zip
           if-no-files-found: error
 
       - name: Create or Update GitHub Release
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main'
         with:
-          tag_name: v2.3.0
-          name: "LTspice Component Adder Pro v2.3.0 (GitHub In-App Auto-Updater & 59 Verified Models)"
+          tag_name: v2.3.1
+          name: "LTspice Component Adder Pro v2.3.1 (LTspice 24/26 SQLite DB Sync & Multi-Version Auto-Resolution)"
           body: |
-            # ⚡ LTspice Component Adder Pro — Windows Standalone Release (v2.3.0)
+            # ⚡ LTspice Component Adder Pro — Windows Standalone Release (v2.3.1)
 
             Built automatically via GitHub Actions for Windows 10 & Windows 11.
 
-            ### 🚀 What's New in v2.3.0:
+            ### 🚀 What's New in v2.3.1:
+            - **🛠️ LTspice 24 & 26 SQLite Database Sync**: Synchronizes models directly into `standard_dio.db`, `standard_bjt.db`, `standard_jft.db`, `standard_mos.db` in addition to standard text cmp databases.
+            - **🎯 Smart Directory Auto-Resolution**: Automatically detects when a user points to `Documents\LTspice` and re-routes to the real LTspice 24 `%LOCALAPPDATA%\LTspice` library location.
+            - **🔄 Multi-Version Simultaneous Sync**: If multiple LTspice versions (e.g. LTspice 24 and LTspice XVII) are installed on the PC, components and standard databases are automatically replicated to all of them.
+            - **🛡️ Running Process Guard**: Detects if LTspice is currently open and prompts the user to close LTspice so new database models load cleanly.
+            - **🧹 Multi-Line SPICE Continuation Cleanup**: Fixed continuation line handling (+) when replacing existing models in standard cmp files.
             - **🔄 GitHub In-App Auto-Updater**: The Windows app automatically checks GitHub Releases for new updates on launch in the background, or on demand via the **"Check for Updates"** button. If an update is detected, an interactive dialog allows 1-click download, verified streaming progress, and seamless self-replacement restart on Windows!
             - **📦 Portable ZIP Package**: Available as a `.zip` archive to run cleanly without Windows Defender SmartScreen MOTW browser flags.
             - **⚡ 1-Click Instant Install**: Open the app and click **⚡ Add All (59)** to install and verify all 59 components into LTspice in seconds.
@@ -79,11 +84,11 @@ jobs:
             - **Native LTspice Database Sync**: Updates `standard.dio`, `standard.bjt`, `standard.jft`, `standard.mos`.
 
             ### 📥 Download
-            - **Recommended (No SmartScreen Warning)**: Download **`ltspice-component-adder-v2.3.0.zip`**, extract, and double-click to run!
+            - **Recommended (No SmartScreen Warning)**: Download **`ltspice-component-adder-v2.3.1.zip`**, extract, and double-click to run!
             - **Standalone Executable**: Download **`ltspice-component-adder-by-Basi.exe`** directly.
           files: |
             desktop-app/dist/ltspice-component-adder-by-Basi.exe
-            desktop-app/dist/ltspice-component-adder-v2.3.0.zip
+            desktop-app/dist/ltspice-component-adder-v2.3.1.zip
           draft: false
           prerelease: false
         env:

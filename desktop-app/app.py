@@ -10,9 +10,11 @@ import urllib.request
 import webbrowser
 import tempfile
 import subprocess
+import re
+import sqlite3
 
 # ── Version & GitHub In-App Updater Configurations ─────────────────────────────
-APP_VERSION = "2.3.0"
+APP_VERSION = "2.3.1"
 GITHUB_REPO = "basithm9655/Lt-spice-component-adder"
 GITHUB_LATEST_RELEASE_API = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
 
@@ -142,7 +144,6 @@ LTSPICE_CANDIDATES = [
     os.path.expandvars(r"%LOCALAPPDATA%\Programs\ADI\LTspice"),
     os.path.expandvars(r"%USERPROFILE%\AppData\Local\LTspice"),
     os.path.expandvars(r"%USERPROFILE%\Documents\LTspiceXVII"),
-    os.path.expandvars(r"%USERPROFILE%\Documents\LTspice"),
     os.path.expandvars(r"%ProgramFiles%\ADI\LTspice"),
     os.path.expandvars(r"%ProgramFiles(x86)%\ADI\LTspice"),
     os.path.expandvars(r"%ProgramFiles%\LTC\LTspiceXVII"),
@@ -233,11 +234,61 @@ def save_cfg(d):
     except Exception:
         pass
 
+def resolve_real_ltspice_path(path):
+    """
+    Ensures the path points to the real LTspice library root.
+    If the user selected their Documents\LTspice folder (where circuits are saved),
+    automatically redirects to %LOCALAPPDATA%\LTspice if it exists.
+    """
+    if not path:
+        return ""
+    p = os.path.normpath(str(path).strip())
+    base = os.path.basename(p).lower()
+    p_lower = p.lower()
+
+    if base == "ltspice" and "documents" in p_lower:
+        local_app = os.path.expandvars(r"%LOCALAPPDATA%\LTspice")
+        if os.path.isdir(os.path.join(local_app, "lib")) or os.path.isdir(os.path.join(local_app, "cmp")):
+            return local_app
+        wine_app = os.path.expanduser("~/.wine/drive_c/users/basi/AppData/Local/LTspice")
+        if os.path.isdir(os.path.join(wine_app, "lib")):
+            return wine_app
+
+    if base in ("lib", "cmp") and os.path.isdir(p):
+        return os.path.dirname(p)
+
+    return p
+
 def detect_ltspice():
+    # 1. First priority: candidate folders that actually have 'lib' or 'cmp'
     for p in LTSPICE_CANDIDATES:
-        if os.path.isdir(p):
-            return p
+        res = resolve_real_ltspice_path(p)
+        if res and os.path.isdir(res) and (
+            os.path.isdir(os.path.join(res, "lib")) or 
+            os.path.isdir(os.path.join(res, "cmp"))
+        ):
+            return res
+
+    # 2. Second priority: any candidate directory that exists
+    for p in LTSPICE_CANDIDATES:
+        res = resolve_real_ltspice_path(p)
+        if res and os.path.isdir(res):
+            return res
     return ""
+
+def get_all_detected_ltspice_roots():
+    """Find all valid LTspice library roots on this machine to ensure complete multi-version syncing."""
+    found = []
+    seen = set()
+    for p in LTSPICE_CANDIDATES:
+        res = resolve_real_ltspice_path(p)
+        if res and os.path.isdir(res):
+            if os.path.isdir(os.path.join(res, "lib")) or os.path.isdir(os.path.join(res, "cmp")):
+                norm = os.path.normcase(os.path.abspath(res))
+                if norm not in seen:
+                    seen.add(norm)
+                    found.append(res)
+    return found
 
 _ASY_DESC_CACHE = {}
 
@@ -322,7 +373,11 @@ def scan_categories(bundled_only=False):
 def is_ltspice_running():
     try:
         import subprocess
-        out = subprocess.run(["tasklist"], capture_output=True, text=True, creationflags=0x08000000).stdout.lower()
+        if sys.platform == "win32":
+            flags = 0x08000000
+            out = subprocess.run(["tasklist"], capture_output=True, text=True, creationflags=flags).stdout.lower()
+        else:
+            out = subprocess.run(["ps", "-ef"], capture_output=True, text=True).stdout.lower()
         return any(proc in out for proc in ("ltspice.exe", "xviix64.exe", "xviix86.exe"))
     except Exception:
         return False
@@ -330,7 +385,8 @@ def is_ltspice_running():
 def sync_standard_cmp_databases(ltspice_root, log_list=None):
     """
     Safely upserts discrete models into standard.dio, standard.bjt, standard.jft, standard.mos
-    so that they appear in the native LTspice right-click component selector.
+    AND SQLite databases (standard_dio.db, standard_bjt.db, standard_jft.db, standard_mos.db in LTspice 24/26)
+    so that they appear in the native LTspice right-click component selector and simulate seamlessly.
     Automatically detects UTF-16LE, UTF-8, and Latin-1 encodings and creates .bak backups.
     """
     if not ltspice_root or not os.path.isdir(ltspice_root):
@@ -341,18 +397,37 @@ def sync_standard_cmp_databases(ltspice_root, log_list=None):
         if os.path.isdir(os.path.join(ltspice_root, "cmp")):
             cmp_dir = os.path.join(ltspice_root, "cmp")
         else:
-            return 0, []
+            lib_dir = os.path.join(ltspice_root, "lib")
+            if os.path.isdir(lib_dir):
+                cmp_dir = os.path.join(lib_dir, "cmp")
+                os.makedirs(cmp_dir, exist_ok=True)
+            else:
+                return 0, []
 
     synced_count = 0
     synced_logs = []
 
+    DB_MAP = {
+        "standard.dio": ("standard_dio.db", "Diode"),
+        "standard.bjt": ("standard_bjt.db", "BJT"),
+        "standard.jft": ("standard_jft.db", "JFET"),
+        "standard.mos": ("standard_mos.db", "MOSFET"),
+    }
+
+    import sqlite3
+
     for filename, lines in STANDARD_MODELS.items():
         file_path = os.path.join(cmp_dir, filename)
+
         if not os.path.exists(file_path):
-            continue
+            try:
+                with open(file_path, "w", encoding="utf-8") as wf:
+                    wf.write(f"* Standard {filename} component database\n")
+            except Exception:
+                pass
 
         bak_path = file_path + ".bak"
-        if not os.path.exists(bak_path):
+        if not os.path.exists(bak_path) and os.path.exists(file_path):
             try:
                 shutil.copy2(file_path, bak_path)
             except Exception:
@@ -385,11 +460,15 @@ def sync_standard_cmp_databases(ltspice_root, log_list=None):
                 parts = model_line.strip().split()
                 if len(parts) >= 2:
                     model_name = parts[1]
-                    pat = re.compile(rf"^\s*\.model\s+{re.escape(model_name)}\s+", re.IGNORECASE)
+                    pat = re.compile(rf"^\s*\.model\s+{re.escape(model_name)}\b", re.IGNORECASE)
                     replaced = False
                     for idx, existing_line in enumerate(content_lines):
                         if pat.match(existing_line):
                             content_lines[idx] = model_line.strip()
+                            # Cleanly remove any continuation lines (+) belonging to old model definition
+                            del_idx = idx + 1
+                            while del_idx < len(content_lines) and content_lines[del_idx].strip().startswith("+"):
+                                content_lines.pop(del_idx)
                             replaced = True
                             updated_count += 1
                             break
@@ -411,6 +490,49 @@ def sync_standard_cmp_databases(ltspice_root, log_list=None):
             if log_list is not None:
                 log_list.append(err)
 
+        if filename in DB_MAP:
+            sqlite_file, table_name = DB_MAP[filename]
+            db_path = os.path.join(cmp_dir, sqlite_file)
+            if os.path.exists(db_path):
+                db_bak = db_path + ".bak"
+                if not os.path.exists(db_bak):
+                    try:
+                        shutil.copy2(db_path, db_bak)
+                    except Exception:
+                        pass
+                try:
+                    conn = sqlite3.connect(db_path)
+                    cur = conn.cursor()
+                    cur.execute(f"SELECT id, Model FROM {table_name}")
+                    existing_rows = cur.fetchall()
+                    sql_updated = 0
+                    for model_line in lines:
+                        parts = model_line.strip().split()
+                        if len(parts) >= 2:
+                            mname = parts[1].strip()
+                            pat = re.compile(rf"^\s*\.model\s+{re.escape(mname)}\b", re.IGNORECASE)
+                            match_id = None
+                            for row_id, row_m in existing_rows:
+                                if row_m and pat.match(row_m):
+                                    match_id = row_id
+                                    break
+                            if match_id:
+                                cur.execute(f"UPDATE {table_name} SET Model = ? WHERE id = ?", (model_line.strip(), match_id))
+                            else:
+                                cur.execute(f"INSERT INTO {table_name} (Model) VALUES (?)", (model_line.strip(),))
+                            sql_updated += 1
+                    conn.commit()
+                    conn.close()
+                    msg = f"✔ SQLITE SYNC: {sql_updated} models synced in lib\\cmp\\{sqlite_file}"
+                    synced_logs.append(msg)
+                    if log_list is not None:
+                        log_list.append(msg)
+                except Exception as e:
+                    err = f"✘ SQLITE SYNC: Failed for {sqlite_file} ({str(e)})"
+                    synced_logs.append(err)
+                    if log_list is not None:
+                        log_list.append(err)
+
     return synced_count, synced_logs
 
 def install_components_verified(components, ltspice_root, progress_callback=None):
@@ -419,6 +541,7 @@ def install_components_verified(components, ltspice_root, progress_callback=None
     Copies .asy to lib/sym/<category>/
     Copies .lib/.sub to BOTH lib/sub/<category>/ AND lib/sub/ (ensuring global search resolution).
     Also synchronizes standard.dio/bjt/jft/mos so components appear in native right-click dropdown.
+    Automatically replicates installation across any other detected LTspice installations on this machine.
     Returns (copied_files_count, error_list, detail_log)
     """
     ok, errors, log = 0, [], []
@@ -438,18 +561,13 @@ def install_components_verified(components, ltspice_root, progress_callback=None
             dst = os.path.join(dest_dir, fname)
 
             try:
-                # Direct file copy to category folder
                 shutil.copy2(src, dst)
-
-                # Strict verification check
                 if os.path.exists(dst) and os.path.getsize(dst) == os.path.getsize(src):
                     ok += 1
                     log.append(f"✔ VERIFIED: lib\\{sub}\\{comp['category']}\\{fname}")
                 else:
                     raise IOError("Verification failed: File missing or size mismatch after copying.")
 
-                # If this is a library or subcircuit, ALSO copy to root lib/sub
-                # so that schematics referencing just ModelFile name will find it immediately!
                 if sub == "sub":
                     global_sub = os.path.join(ltspice_root, "lib", "sub")
                     os.makedirs(global_sub, exist_ok=True)
@@ -471,8 +589,29 @@ def install_components_verified(components, ltspice_root, progress_callback=None
     if db_count > 0:
         log.append(f"✔ VERIFIED: {db_count} models synced into LTspice native component picker.")
 
-    return ok, errors, log
+    # Multi-version sync: Replicate across any other detected LTspice installations
+    try:
+        all_roots = get_all_detected_ltspice_roots()
+        primary_norm = os.path.normcase(os.path.abspath(ltspice_root)) if ltspice_root else ""
+        for extra_root in all_roots:
+            if os.path.normcase(os.path.abspath(extra_root)) != primary_norm:
+                for comp in components:
+                    for fname in comp["files"]:
+                        ext = os.path.splitext(fname)[1].lower()
+                        sub = EXT_MAP.get(ext, "sub")
+                        dest_dir = os.path.join(extra_root, "lib", sub, comp["category"])
+                        os.makedirs(dest_dir, exist_ok=True)
+                        shutil.copy2(os.path.join(comp["path"], fname), os.path.join(dest_dir, fname))
+                        if sub == "sub":
+                            global_sub = os.path.join(extra_root, "lib", "sub")
+                            os.makedirs(global_sub, exist_ok=True)
+                            shutil.copy2(os.path.join(comp["path"], fname), os.path.join(global_sub, fname))
+                sync_standard_cmp_databases(extra_root)
+                log.append(f"✔ MULTI-INSTALL: Also synchronized to {extra_root}")
+    except Exception:
+        pass
 
+    return ok, errors, log
 
 # ── Premium Custom Canvas Logo Widget ──────────────────────────────────────────
 
@@ -1334,6 +1473,24 @@ del "%~f0" > nul
                 messagebox.showerror("Setup Folder Path", "Please select or auto-detect your LTspice install folder first.")
                 return
 
+        resolved = resolve_real_ltspice_path(self.ltspice_path)
+        if resolved != self.ltspice_path and os.path.isdir(resolved):
+            self.ltspice_path = resolved
+            self.cfg["ltspice_path"] = resolved
+            save_cfg(self.cfg)
+            self.path_lbl.configure(text=self._short(resolved), text_color="#38bdf8")
+
+        if is_ltspice_running():
+            ans = messagebox.askokcancel(
+                "LTspice is Running",
+                "LTspice is currently running.\n\n"
+                "To ensure LTspice reloads the new component models and databases,\n"
+                "please close LTspice, then click OK to continue.\n\n"
+                "(Or click Cancel to close LTspice first)"
+            )
+            if not ans:
+                return
+
         all_comps = []
         for cat_list in self.categories.values():
             all_comps.extend(cat_list)
@@ -1351,6 +1508,24 @@ del "%~f0" > nul
             else:
                 messagebox.showerror("Setup Folder Path",
                                      "LTspice install folder is not configured. Please browse and select it first.")
+                return
+
+        resolved = resolve_real_ltspice_path(self.ltspice_path)
+        if resolved != self.ltspice_path and os.path.isdir(resolved):
+            self.ltspice_path = resolved
+            self.cfg["ltspice_path"] = resolved
+            save_cfg(self.cfg)
+            self.path_lbl.configure(text=self._short(resolved), text_color="#38bdf8")
+
+        if is_ltspice_running():
+            ans = messagebox.askokcancel(
+                "LTspice is Running",
+                "LTspice is currently running.\n\n"
+                "To ensure LTspice reloads the new component models and databases,\n"
+                "please close LTspice, then click OK to continue.\n\n"
+                "(Or click Cancel to close LTspice first)"
+            )
+            if not ans:
                 return
 
         cat = self.active_cat.get()
@@ -1424,8 +1599,8 @@ del "%~f0" > nul
                      font=ctk.CTkFont("Segoe UI", 15, "bold"),
                      text_color=title_color).pack(pady=(20, 4), padx=20, anchor="w")
 
-        ctk.CTkLabel(win, text="All symbol (.asy) and model (.lib) files placed in correct directories.",
-                     font=ctk.CTkFont(size=11), text_color="#64748b").pack(padx=20, anchor="w")
+        ctk.CTkLabel(win, text="All symbol (.asy) and model (.lib) files placed in correct directories.\n💡 Note: If LTspice was open, please restart LTspice to load new models.",
+                     font=ctk.CTkFont(size=11), text_color="#64748b", justify="left").pack(padx=20, anchor="w")
 
         tb = ctk.CTkTextbox(win, font=ctk.CTkFont(family="Consolas", size=11),
                             fg_color="#090911", text_color="#a7f3d0" if not errs else "#fed7aa",
@@ -1699,6 +1874,7 @@ del "%~f0" > nul
     def _browse(self):
         p = filedialog.askdirectory(title="Browse and select local LTspice root directory", parent=self)
         if p:
+            p = resolve_real_ltspice_path(p)
             self.ltspice_path = p
             self.cfg["ltspice_path"] = p
             save_cfg(self.cfg)
